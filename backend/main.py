@@ -26,7 +26,9 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "https://govindkiginni.duckdns.org",  # Production DuckDNS domain (HTTPS)
-        "http://govindkiginni.duckdns.org",   # Production DuckDNS domain (HTTP)
+        "http://govindkiginni.duckdns.org", # Production DuckDNS domain (HTTP)
+        "http://43.205.76.228", # AWS LIGHTSAIL STATIC IP
+        "https://43.205.76.228",  
         "http://localhost:8001",               # Local testing
         "http://127.0.0.1:8001",               # Local testing (IP)
         "http://localhost:5500",               # Live Server (VS Code)
@@ -38,7 +40,9 @@ app.add_middleware(
 )
 
 # Create uploads directory if it doesn't exist
-UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
+# Use absolute path for production deployment
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # Mount static files for the frontend - serve from parent directory

@@ -3,8 +3,17 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy.sql import func
 import os
 
+# Production: Use absolute path in home directory
+# Local dev: Use current directory
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE_PATH = os.path.join(BASE_DIR, "wedding_database.db")
+
 # Database setup
-DATABASE_URL = "sqlite:///./wedding_database.db"
+DATABASE_URL = f"sqlite:///{DATABASE_PATH}"
+
+print(f"BASE_DIR = {BASE_DIR}")
+print(f"DATABASE_PATH = {DATABASE_PATH}")
+print(f"DATABASE_URL = {DATABASE_URL}")
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
