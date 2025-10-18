@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Govind & Samidha's Wedding</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#005F69">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="apple-touch-icon" href="images/icon-192.svg">
+    
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        'coral-pink': '#FF9B8A',
+                        'salmon-pink': '#FFB5A7',
+                        'emerald-green': '#50C878',
+                        'sage-green': '#9CAF88',
+                        'cream': '#FDF6E3',
+                        'champagne': '#F7E7CE',
+                        'teal-blue': '#008B8B',
+                        'peacock-blue': '#005F69',
+                        'terracotta': '#E2725B',
+                        'burnt-orange': '#CC5500',
+                        'gold': '#FFD700',
+                        'warm-brass': '#B5651D',
+                    },
+                    fontFamily: {
+                        'heading': ['Playfair Display', 'serif'],
+                        'elegant': ['Cormorant Garamond', 'serif'],
+                        'body': ['Montserrat', 'sans-serif'],
+                        'script': ['Dancing Script', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Mughal-inspired ornamental border pattern */
+        .mughal-border {
+            background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 10 L45 20 L55 20 L47 27 L50 37 L40 30 L30 37 L33 27 L25 20 L35 20 Z' fill='%23FFD700' opacity='0.15'/%3E%3Cpath d='M10 40 L15 50 L25 50 L17 57 L20 67 L10 60 L0 67 L3 57 L-5 50 L5 50 Z' fill='%2350C878' opacity='0.12'/%3E%3Cpath d='M70 40 L75 50 L85 50 L77 57 L80 67 L70 60 L60 67 L63 57 L55 50 L65 50 Z' fill='%23FF9B8A' opacity='0.12'/%3E%3Cpath d='M40 70 L45 80 L55 80 L47 87 L50 97 L40 90 L30 97 L33 87 L25 80 L35 80 Z' fill='%23008B8B' opacity='0.12'/%3E%3C/svg%3E");
+            background-size: 80px 80px;
+            background-repeat: repeat;
+        }
+
+        /* Botanical pattern overlay */
+        .botanical-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2350C878' fill-opacity='0.08'%3E%3Cpath d='M30 30c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10zm10 0c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Peacock feather accent */
+        .peacock-accent {
+            background: linear-gradient(135deg, #005F69 0%, #008B8B 50%, #50C878 100%);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(1deg); }
+            50% { transform: translateY(-15px) rotate(0deg); }
+            75% { transform: translateY(-10px) rotate(-1deg); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        @keyframes peacockDance {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(3deg) scale(1.05); }
+            50% { transform: rotate(0deg) scale(1.1); }
+            75% { transform: rotate(-3deg) scale(1.05); }
+        }
+
+        @keyframes petalFloat {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-20px) translateX(10px) rotate(180deg);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-40px) translateX(-5px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes goldShimmer {
+            0%, 100% { 
+                text-shadow: 0 0 5px rgba(255, 215, 0, 0.3),
+                             0 0 10px rgba(255, 215, 0, 0.2);
+            }
+            50% { 
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.6),
+                             0 0 30px rgba(255, 215, 0, 0.4),
+                             0 0 40px rgba(255, 215, 0, 0.2);
+            }
+        }
+
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-fadeInUp { animation: fadeInUp 1s ease-out forwards; }
+        .animate-fadeIn { animation: fadeIn 1.5s ease-out forwards; }
+        .animate-scaleIn { animation: scaleIn 0.8s ease-out forwards; }
+        .animate-peacockDance { animation: peacockDance 4s ease-in-out infinite; }
+        .animate-goldShimmer { animation: goldShimmer 3s ease-in-out infinite; }
+
+        /* Decorative floating elements */
+        .floating-element {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0;
+            animation: petalFloat 8s ease-in-out infinite;
+        }
+
+        .delay-1 { animation-delay: 0s; }
+        .delay-2 { animation-delay: 2s; }
+        .delay-3 { animation-delay: 4s; }
+        .delay-4 { animation-delay: 6s; }
+
+        /* Ornamental divider */
+        .ornamental-divider {
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                #FFD700 20%, 
+                #B5651D 50%, 
+                #FFD700 80%, 
+                transparent 100%);
+            position: relative;
+        }
+
+        .ornamental-divider::before,
+        .ornamental-divider::after {
+            content: '❖';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #FFD700;
+            font-size: 12px;
+        }
+
+        .ornamental-divider::before { left: 10%; }
+        .ornamental-divider::after { right: 10%; }
+
+        /* Arch frame effect */
+        .mughal-arch {
+            position: relative;
+            padding: 2rem;
+        }
+
+        .mughal-arch::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: 100%;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+            pointer-events: none;
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #005F69 0%, #008B8B 50%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Interactive button glow */
+        .button-glow {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button-glow::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .button-glow:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-cream dark:bg-peacock-blue font-body relative">
+    <!-- Decorative Background Layers -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <!-- Mughal pattern overlay -->
+        <div class="mughal-border opacity-40 absolute inset-0"></div>
+        
+        <!-- Botanical pattern -->
+        <div class="botanical-pattern absolute inset-0 opacity-30"></div>
+        
+        <!-- Gradient overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-champagne/50 via-cream/30 to-champagne/50"></div>
+        
+        <!-- Floating botanical elements -->
+        <div class="floating-element delay-1 text-6xl top-10 left-10">🌿</div>
+        <div class="floating-element delay-2 text-4xl top-20 right-20">🌺</div>
+        <div class="floating-element delay-3 text-5xl bottom-32 left-1/4">🦚</div>
+        <div class="floating-element delay-4 text-3xl top-1/3 right-10">🌸</div>
+        <div class="floating-element delay-1 text-4xl bottom-20 right-1/3" style="animation-delay: 1s;">🍃</div>
+        <div class="floating-element delay-2 text-5xl top-1/2 left-20" style="animation-delay: 3s;">💐</div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="relative min-h-screen w-full flex flex-col items-center justify-between px-6 py-8">
+        
+        <!-- Decorative Top Arch -->
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-64 h-32 border-4 border-gold/20 rounded-b-full opacity-50"></div>
+        
+        <!-- Top Decorative Elements -->
+        <div class="relative z-10 w-full max-w-2xl">
+            <div class="flex justify-center mb-4 opacity-0 animate-fadeIn" style="animation-delay: 0.2s;">
+                <div class="text-6xl animate-peacockDance">🦚</div>
+            </div>
+            
+            <!-- Ornamental top border -->
+            <div class="flex justify-center items-center gap-3 mb-4 opacity-0 animate-fadeIn" style="animation-delay: 0.4s;">
+                <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-gold to-warm-brass"></div>
+                <div class="text-gold text-xl">❖</div>
+                <div class="w-16 h-0.5 bg-gradient-to-r from-warm-brass via-gold to-transparent"></div>
+            </div>
+        </div>
+
+        <!-- Main Hero Content -->
+        <main class="relative z-10 flex flex-col items-center justify-center text-center flex-grow max-w-3xl mughal-arch">
+            
+            <!-- Animated peacocks on sides -->
+            <div class="hidden md:block absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-20 text-7xl opacity-20 animate-float">
+                🦚
+            </div>
+            <div class="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-20 text-7xl opacity-20 animate-float" style="animation-delay: 3s;">
+                🦚
+            </div>
+
+            <!-- Names with elegant entrance -->
+            <div class="opacity-0 animate-fadeInUp" style="animation-delay: 0.6s;">
+                <h1 class="font-heading text-6xl md:text-7xl lg:text-8xl font-bold text-peacock-blue dark:text-champagne mb-2 animate-goldShimmer">
+                    Govind <span class="text-gold">&</span> Samidha
+                </h1>
+            </div>
+
+            <!-- Decorative flourish -->
+            <div class="my-6 opacity-0 animate-scaleIn" style="animation-delay: 1s;">
+                <div class="flex items-center justify-center gap-3">
+                    <div class="text-2xl text-emerald-green animate-float">🌿</div>
+                    <div class="w-2 h-2 rounded-full bg-gold"></div>
+                    <div class="text-3xl text-coral-pink">💕</div>
+                    <div class="w-2 h-2 rounded-full bg-gold"></div>
+                    <div class="text-2xl text-emerald-green animate-float" style="animation-delay: 2s;">🌿</div>
+                </div>
+            </div>
+
+            <!-- Subtitle -->
+            <div class="opacity-0 animate-fadeInUp" style="animation-delay: 1.2s;">
+                <p class="font-script text-3xl md:text-4xl text-emerald-green mb-8">
+                    are getting married
+                </p>
+            </div>
+
+            <!-- Date & Location Card -->
+            <div class="opacity-0 animate-scaleIn" style="animation-delay: 1.4s;">
+                <div class="relative bg-white/80 dark:bg-peacock-blue/80 backdrop-blur-md border-4 border-gold/30 rounded-2xl shadow-2xl p-8 max-w-md mx-auto">
+                    <!-- Corner ornaments -->
+                    <div class="absolute top-2 left-2 text-gold text-xl opacity-50">❖</div>
+                    <div class="absolute top-2 right-2 text-gold text-xl opacity-50">❖</div>
+                    <div class="absolute bottom-2 left-2 text-gold text-xl opacity-50">❖</div>
+                    <div class="absolute bottom-2 right-2 text-gold text-xl opacity-50">❖</div>
+                    
+                    <!-- Countdown Timer -->
+                    <div class="mb-6">
+                        <p class="font-elegant text-sm text-emerald-green dark:text-sage-green mb-3 tracking-wider uppercase">Celebration Begins In</p>
+                        <div class="grid grid-cols-4 gap-3">
+                            <div class="bg-gradient-to-br from-coral-pink to-salmon-pink rounded-lg p-3 text-white">
+                                <div class="font-heading text-2xl font-bold" id="days">30</div>
+                                <div class="font-body text-xs">Days</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-emerald-green to-sage-green rounded-lg p-3 text-white">
+                                <div class="font-heading text-2xl font-bold" id="hours">12</div>
+                                <div class="font-body text-xs">Hours</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-peacock-blue to-teal-blue rounded-lg p-3 text-white">
+                                <div class="font-heading text-2xl font-bold" id="minutes">45</div>
+                                <div class="font-body text-xs">Min</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-terracotta to-burnt-orange rounded-lg p-3 text-white">
+                                <div class="font-heading text-2xl font-bold" id="seconds">23</div>
+                                <div class="font-body text-xs">Sec</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ornamental divider -->
+                    <div class="ornamental-divider my-6"></div>
+                    
+                    <!-- Date -->
+                    <div class="mb-4">
+                        <p class="font-heading text-2xl md:text-3xl font-semibold text-peacock-blue dark:text-champagne tracking-wider">
+                            21-23 NOVEMBER 2025
+                        </p>
+                    </div>
+                    
+                    <!-- Location -->
+                    <div class="flex items-center justify-center gap-2 text-emerald-green dark:text-sage-green">
+                        <span class="material-symbols-outlined text-xl">location_on</span>
+                        <p class="font-elegant text-xl md:text-2xl">
+                            Pushkar, Rajasthan
+                        </p>
+                    </div>
+
+                    <!-- Venue detail -->
+                    <p class="mt-3 font-body text-sm text-peacock-blue/70 dark:text-champagne/70">
+                        Wild Rose Resort & Spa
+                    </p>
+                </div>
+            </div>
+
+            <!-- Botanical flourish below date card -->
+            <div class="mt-8 flex justify-center gap-4 opacity-0 animate-fadeIn" style="animation-delay: 1.8s;">
+                <div class="text-3xl animate-float">🌹</div>
+                <div class="text-2xl animate-float" style="animation-delay: 1s;">🌿</div>
+                <div class="text-3xl animate-float" style="animation-delay: 2s;">🌺</div>
+                <div class="text-2xl animate-float" style="animation-delay: 3s;">🍃</div>
+                <div class="text-3xl animate-float" style="animation-delay: 4s;">🌸</div>
+            </div>
+
+        </main>
+
+        <!-- CTA Button Section -->
+        <footer class="relative z-10 w-full flex flex-col items-center pb-8 px-6 opacity-0 animate-fadeInUp" style="animation-delay: 2s;">
+            
+            <!-- Primary CTA -->
+            <button onclick="window.location.href='our-story.html'" class="button-glow group relative w-full max-w-sm bg-gradient-to-r from-emerald-green via-teal-blue to-peacock-blue text-white font-heading font-bold text-lg py-4 px-8 rounded-full shadow-2xl hover:shadow-emerald-green/50 transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 mb-6">
+                <span class="relative z-10 flex items-center justify-center gap-3">
+                    <span class="text-2xl group-hover:animate-peacockDance">💕</span>
+                    <span>Join Our Celebration</span>
+                    <span class="text-2xl group-hover:animate-peacockDance">💕</span>
+                </span>
+            </button>
+
+            <!-- Secondary links -->
+            <div class="flex flex-wrap justify-center gap-4 mb-6">
+                <a href="events.html" class="font-body text-sm font-medium text-peacock-blue dark:text-champagne hover:text-emerald-green dark:hover:text-gold transition-colors duration-300 flex items-center gap-1 group">
+                    <span class="material-symbols-outlined text-base group-hover:scale-110 transition-transform">celebration</span>
+                    <span>Events</span>
+                </a>
+                <span class="text-gold">•</span>
+                <a href="venue.html" class="font-body text-sm font-medium text-peacock-blue dark:text-champagne hover:text-emerald-green dark:hover:text-gold transition-colors duration-300 flex items-center gap-1 group">
+                    <span class="material-symbols-outlined text-base group-hover:scale-110 transition-transform">location_on</span>
+                    <span>Venue</span>
+                </a>
+                <span class="text-gold">•</span>
+                <a href="rsvp.html" class="font-body text-sm font-medium text-peacock-blue dark:text-champagne hover:text-emerald-green dark:hover:text-gold transition-colors duration-300 flex items-center gap-1 group">
+                    <span class="material-symbols-outlined text-base group-hover:scale-110 transition-transform">rsvp</span>
+                    <span>RSVP</span>
+                </a>
+                <span class="text-gold">•</span>
+                <a href="memories.html" class="font-body text-sm font-medium text-peacock-blue dark:text-champagne hover:text-emerald-green dark:hover:text-gold transition-colors duration-300 flex items-center gap-1 group">
+                    <span class="material-symbols-outlined text-base group-hover:scale-110 transition-transform">photo_library</span>
+                    <span>Gallery</span>
+                </a>
+            </div>
+
+            <!-- Ornamental bottom border -->
+            <div class="flex justify-center items-center gap-3">
+                <div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-gold to-warm-brass"></div>
+                <div class="text-gold text-sm">❖</div>
+                <div class="w-20 h-0.5 bg-gradient-to-r from-warm-brass via-gold to-transparent"></div>
+            </div>
+
+            <!-- Navigate to Our Story prompt (hidden on mobile, shown on desktop) -->
+            <button onclick="window.location.href='our-story.html'" class="hidden md:block mt-8 opacity-70 hover:opacity-100 transition-opacity duration-300 cursor-pointer bg-transparent border-none">
+                <div class="flex flex-col items-center gap-1 text-emerald-green hover:text-teal-blue transition-colors duration-300">
+                    <span class="font-elegant text-xs tracking-wider">Explore Our Story</span>
+                    <span class="material-symbols-outlined text-2xl">arrow_forward</span>
+                </div>
+            </button>
+        </footer>
+
+    </div>
+
+    <!-- Bottom decorative peacock accent bar -->
+    <div class="fixed bottom-0 left-0 right-0 h-1 peacock-accent opacity-60 pointer-events-none"></div>
+
+    <script>
+        // Live countdown timer to wedding date
+        function updateCountdown() {
+            const weddingDate = new Date('2025-11-21T00:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+            
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = hours;
+                document.getElementById('minutes').textContent = minutes;
+                document.getElementById('seconds').textContent = seconds;
+            } else {
+                // Wedding day has passed
+                document.getElementById('days').textContent = '0';
+                document.getElementById('hours').textContent = '0';
+                document.getElementById('minutes').textContent = '0';
+                document.getElementById('seconds').textContent = '0';
+            }
+        }
+        
+        // Update countdown every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Floating petals animation initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            const floatingElements = document.querySelectorAll('.floating-element');
+            floatingElements.forEach(el => {
+                el.style.opacity = '0.8';
+            });
+        });
+
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registered successfully');
+                    })
+                    .catch(function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+
+        // Add parallax effect on mouse move (desktop only)
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', function(e) {
+                const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+                const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+                
+                document.querySelectorAll('.floating-element').forEach((el, index) => {
+                    const depth = (index + 1) * 0.5;
+                    el.style.transform = `translate(${moveX * depth}px, ${moveY * depth}px)`;
+                });
+            });
+        }
+
+        console.log('🦚 Enhanced Indo-Persian Wedding Homepage Loaded');
+        console.log('✨ Botanical maximalist aesthetic with Mughal-inspired elements active');
+    </script>
+
+</body>
+</html>

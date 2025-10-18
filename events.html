@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Wedding Celebration Events</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        'coral-pink': '#FF9B8A',
+                        'salmon-pink': '#FFB5A7',
+                        'emerald-green': '#50C878',
+                        'sage-green': '#9CAF88',
+                        'cream': '#FDF6E3',
+                        'champagne': '#F7E7CE',
+                        'teal-blue': '#008B8B',
+                        'peacock-blue': '#005F69',
+                        'terracotta': '#E2725B',
+                        'burnt-orange': '#CC5500',
+                        'gold': '#FFD700',
+                        'warm-brass': '#B5651D',
+                    },
+                    fontFamily: {
+                        'heading': ['Playfair Display', 'serif'],
+                        'elegant': ['Cormorant Garamond', 'serif'],
+                        'body': ['Montserrat', 'sans-serif'],
+                        'script': ['Dancing Script', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            min-height: 100vh;
+        }
+
+        /* Botanical pattern */
+        .botanical-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2350C878' fill-opacity='0.08'%3E%3Cpath d='M30 30c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10zm10 0c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        /* Event card hover effects */
+        .event-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 95, 105, 0.25);
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.8s;
+        }
+
+        .event-card:hover::before {
+            left: 100%;
+        }
+
+        /* Image overlay gradient */
+        .event-image-overlay {
+            background: linear-gradient(to bottom, 
+                rgba(0, 0, 0, 0.1) 0%,
+                rgba(0, 0, 0, 0.3) 50%,
+                rgba(0, 0, 0, 0.7) 100%);
+            transition: background 0.5s ease;
+        }
+
+        .event-card:hover .event-image-overlay {
+            background: linear-gradient(to bottom, 
+                rgba(0, 95, 105, 0.3) 0%,
+                rgba(0, 139, 139, 0.5) 50%,
+                rgba(0, 95, 105, 0.8) 100%);
+        }
+
+        /* Day header styles */
+        .day-header {
+            position: relative;
+            padding: 1rem 0;
+        }
+
+        .day-header::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, #FFD700, #B5651D);
+            border-radius: 2px;
+        }
+
+        /* Corner ornaments */
+        .corner-ornament {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            pointer-events: none;
+        }
+
+        .corner-ornament.tl {
+            top: 8px;
+            left: 8px;
+            border-top: 2px solid rgba(255, 215, 0, 0.6);
+            border-left: 2px solid rgba(255, 215, 0, 0.6);
+        }
+
+        .corner-ornament.tr {
+            top: 8px;
+            right: 8px;
+            border-top: 2px solid rgba(255, 215, 0, 0.6);
+            border-right: 2px solid rgba(255, 215, 0, 0.6);
+        }
+
+        .corner-ornament.bl {
+            bottom: 8px;
+            left: 8px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.6);
+            border-left: 2px solid rgba(255, 215, 0, 0.6);
+        }
+
+        .corner-ornament.br {
+            bottom: 8px;
+            right: 8px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.6);
+            border-right: 2px solid rgba(255, 215, 0, 0.6);
+        }
+
+        /* Scroll reveal */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-cream dark:bg-peacock-blue font-body text-peacock-blue dark:text-champagne">
+    
+    <!-- Background layers -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div class="botanical-pattern absolute inset-0"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-champagne/40 via-transparent to-champagne/40"></div>
+    </div>
+
+    <div class="relative flex flex-col min-h-screen">
+        
+        <!-- Header -->
+        <header class="sticky top-0 z-50 backdrop-blur-xl bg-cream/90 dark:bg-peacock-blue/90 border-b-2 border-gold/20 shadow-lg">
+            <div class="flex items-center justify-between p-4 max-w-6xl mx-auto">
+                <button onclick="window.location.href='index.html'" class="group flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-coral-pink to-salmon-pink text-white hover:from-emerald-green hover:to-teal-blue transition-all duration-300 transform hover:scale-110 shadow-lg">
+                    <span class="material-symbols-outlined group-hover:scale-110 transition-transform">arrow_back</span>
+                </button>
+                
+                <div class="flex-1 text-center">
+                    <h1 class="font-heading text-2xl md:text-3xl font-bold text-peacock-blue dark:text-champagne">
+                        Celebration Events
+                    </h1>
+                    <div class="flex justify-center items-center gap-2 mt-1">
+                        <div class="w-8 h-0.5 bg-gradient-to-r from-transparent via-gold to-warm-brass"></div>
+                        <div class="text-gold text-xs">❖</div>
+                        <div class="w-8 h-0.5 bg-gradient-to-r from-warm-brass via-gold to-transparent"></div>
+                    </div>
+                </div>
+                
+                <div class="w-12 h-12 flex items-center justify-center">
+                    <div class="text-3xl animate-[float_3s_ease-in-out_infinite]">🎉</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="relative flex-grow px-4 md:px-8 py-12 pb-24 max-w-6xl mx-auto w-full">
+            
+            <!-- Intro Section -->
+            <div class="text-center mb-16 scroll-reveal">
+                <div class="flex justify-center items-center gap-3 mb-6">
+                    <div class="text-4xl animate-[float_3s_ease-in-out_infinite]">🦚</div>
+                    <div class="text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 0.5s;">💐</div>
+                    <div class="text-4xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1s;">🌹</div>
+                    <div class="text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1.5s;">🎊</div>
+                    <div class="text-4xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 2s;">🦚</div>
+                </div>
+                
+                <h2 class="font-script text-4xl md:text-5xl text-emerald-green dark:text-sage-green mb-4">
+                    Three Days of Love & Celebration
+                </h2>
+                
+                <p class="font-elegant text-lg md:text-xl text-peacock-blue/80 dark:text-champagne/80 max-w-2xl mx-auto italic">
+                    Join us for a magnificent celebration filled with traditions, joy, and unforgettable moments
+                </p>
+            </div>
+
+            <!-- Day 1: November 21st -->
+            <div class="mb-20 scroll-reveal">
+                <div class="day-header mb-8">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-gradient-to-r from-coral-pink to-salmon-pink text-white rounded-full w-12 h-12 flex items-center justify-center font-heading font-bold text-xl shadow-lg">
+                            1
+                        </div>
+                        <div>
+                            <h2 class="font-heading text-3xl md:text-4xl font-bold text-peacock-blue dark:text-gold">
+                                Day 1: 21st November
+                            </h2>
+                            <p class="font-elegant text-sm md:text-base text-emerald-green dark:text-sage-green italic">
+                                The festivities begin...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+                    
+                    <!-- Mayra Event -->
+                    <div class="event-card relative rounded-2xl overflow-hidden shadow-2xl border-2 border-gold/30">
+                        <div class="corner-ornament tl"></div>
+                        <div class="corner-ornament tr"></div>
+                        <div class="corner-ornament bl"></div>
+                        <div class="corner-ornament br"></div>
+                        
+                        <!-- Event Image -->
+                        <div class="relative h-64 md:h-80">
+                            <img src="images/events/Maayra.jpeg" alt="Mayra Ceremony" class="absolute inset-0 w-full h-full object-cover"/>
+                            <div class="event-image-overlay absolute inset-0"></div>
+                            
+                            <!-- Event badge -->
+                            <div class="absolute top-4 right-4 bg-gold text-peacock-blue px-4 py-2 rounded-full font-body font-bold text-sm shadow-lg">
+                                Morning
+                            </div>
+
+                            <!-- Event details overlay -->
+                            <div class="absolute inset-0 flex flex-col justify-end p-6 text-white">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="text-3xl animate-[heartBeat_2s_ease-in-out_infinite]">🎨</div>
+                                    <h3 class="font-heading text-2xl md:text-3xl font-bold drop-shadow-lg">
+                                        Mayra
+                                    </h3>
+                                </div>
+                                
+                                <div class="space-y-2 font-body text-sm md:text-base">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">schedule</span>
+                                        <span>11:30 AM - 3:00 PM</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">location_on</span>
+                                        <span>Banquet Hall</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">checkroom</span>
+                                        <span>Traditional Indian Attire</span>
+                                    </div>
+                                </div>
+
+                                <!-- Color palette indicator -->
+                                <div class="mt-4 flex gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-terracotta border-2 border-white shadow"></div>
+                                    <div class="w-6 h-6 rounded-full bg-gold border-2 border-white shadow"></div>
+                                    <div class="w-6 h-6 rounded-full bg-warm-brass border-2 border-white shadow"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Event description -->
+                        <div class="bg-white dark:bg-peacock-blue p-6">
+                            <p class="font-elegant text-sm md:text-base text-peacock-blue/80 dark:text-champagne/80 italic leading-relaxed">
+                                A traditional pre-wedding ritual where turmeric paste is applied to the bride and groom, bringing blessings of radiance and prosperity.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Sangeet Event -->
+                    <div class="event-card relative rounded-2xl overflow-hidden shadow-2xl border-2 border-gold/30">
+                        <div class="corner-ornament tl"></div>
+                        <div class="corner-ornament tr"></div>
+                        <div class="corner-ornament bl"></div>
+                        <div class="corner-ornament br"></div>
+                        
+                        <!-- Event Image -->
+                        <div class="relative h-64 md:h-80">
+                            <img src="images/events/Sangeet.jpg" alt="Ring Ceremony and Sangeet" class="absolute inset-0 w-full h-full object-cover"/>
+                            <div class="event-image-overlay absolute inset-0"></div>
+                            
+                            <!-- Event badge -->
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-coral-pink to-salmon-pink text-white px-4 py-2 rounded-full font-body font-bold text-sm shadow-lg">
+                                Evening
+                            </div>
+
+                            <!-- Event details overlay -->
+                            <div class="absolute inset-0 flex flex-col justify-end p-6 text-white">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="text-3xl animate-[heartBeat_2s_ease-in-out_infinite]">💍</div>
+                                    <h3 class="font-heading text-2xl md:text-3xl font-bold drop-shadow-lg">
+                                        Ring Ceremony & Sangeet
+                                    </h3>
+                                </div>
+                                
+                                <div class="space-y-2 font-body text-sm md:text-base">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">schedule</span>
+                                        <span>6:00 PM - 11:30 PM</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">location_on</span>
+                                        <span>Main Garden</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">checkroom</span>
+                                        <span>Shimmer and Bling</span>
+                                    </div>
+                                </div>
+
+                                <!-- Color palette indicator -->
+                                <div class="mt-4 flex gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-coral-pink border-2 border-white shadow"></div>
+                                    <div class="w-6 h-6 rounded-full bg-gold border-2 border-white shadow"></div>
+                                    <div class="w-6 h-6 rounded-full bg-salmon-pink border-2 border-white shadow"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Event description -->
+                        <div class="bg-white dark:bg-peacock-blue p-6">
+                            <p class="font-elegant text-sm md:text-base text-peacock-blue/80 dark:text-champagne/80 italic leading-relaxed">
+                                An evening of music, dance, and joy as families come together. The ring ceremony marks the official engagement, followed by spectacular performances and celebrations.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Day 2: November 22nd -->
+            <div class="mb-20 scroll-reveal">
+                <div class="day-header mb-8">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-gradient-to-r from-emerald-green to-teal-blue text-white rounded-full w-12 h-12 flex items-center justify-center font-heading font-bold text-xl shadow-lg">
+                            2
+                        </div>
+                        <div>
+                            <h2 class="font-heading text-3xl md:text-4xl font-bold text-peacock-blue dark:text-gold">
+                                Day 2: 22nd November
+                            </h2>
+                            <p class="font-elegant text-sm md:text-base text-emerald-green dark:text-sage-green italic">
+                                The grand celebration...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+                    
+                    <!-- Haldi Carnival Event -->
+                    <div class="event-card relative rounded-2xl overflow-hidden shadow-2xl border-2 border-gold/30">
+                        <div class="corner-ornament tl"></div>
+                        <div class="corner-ornament tr"></div>
+                        <div class="corner-ornament bl"></div>
+                        <div class="corner-ornament br"></div>
+                        
+                        <!-- Event Image -->
+                        <div class="relative h-64 md:h-80">
+                            <img src="images/events/haldi.jpg" alt="Haldi Carnival" class="absolute inset-0 w-full h-full object-cover"/>
+                            <div class="event-image-overlay absolute inset-0"></div>
+                            
+                            <!-- Event badge -->
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-gold to-warm-brass text-peacock-blue px-4 py-2 rounded-full font-body font-bold text-sm shadow-lg">
+                                Morning
+                            </div>
+
+                            <!-- Event details overlay -->
+                            <div class="absolute inset-0 flex flex-col justify-end p-6 text-white">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="text-3xl animate-[heartBeat_2s_ease-in-out_infinite]">🎪</div>
+                                    <h3 class="font-heading text-2xl md:text-3xl font-bold drop-shadow-lg">
+                                        Haldi Carnival
+                                    </h3>
+                                </div>
+                                
+                                <div class="space-y-2 font-body text-sm md:text-base">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">schedule</span>
+                                        <span>10:00 AM - 2:00 PM</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">location_on</span>
+                                        <span>Banquet and Side Lawn</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">checkroom</span>
+                                        <span>Vibrant Colors</span>
+                                    </div>
+                                </div>
+
+                                <!-- Color palette indicator -->
+                                <div class="mt-4 flex gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-gold border-2 border-white shadow"></div>
+                                    <div class="w-6 h-6 rounded-full bg-burnt-orange border-2 border-white shadow"></div>
+                                    <div class="w-6 h-6 rounded-full bg-emerald-green border-2 border-white shadow"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Event description -->
+                        <div class="bg-white dark:bg-peacock-blue p-6">
+                            <p class="font-elegant text-sm md:text-base text-peacock-blue/80 dark:text-champagne/80 italic leading-relaxed">
+                                A joyous celebration where turmeric is playfully applied amidst music and laughter. Expect vibrant colors, traditional games, and carnival-style fun for all ages!
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Wedding & Baarat Event -->
+                    <div class="event-card relative rounded-2xl overflow-hidden shadow-2xl border-2 border-gold/30">
+                        <div class="corner-ornament tl"></div>
+                        <div class="corner-ornament tr"></div>
+                        <div class="corner-ornament bl"></div>
+                        <div class="corner-ornament br"></div>
+                        
+                        <!-- Event Image -->
+                        <div class="relative h-64 md:h-80">
+                            <img src="images/events/baraat.jpg" alt="Wedding Baarat" class="absolute inset-0 w-full h-full object-cover"/>
+                            <div class="event-image-overlay absolute inset-0"></div>
+                            
+                            <!-- Event badge -->
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-peacock-blue to-teal-blue text-white px-4 py-2 rounded-full font-body font-bold text-sm shadow-lg">
+                                Evening
+                            </div>
+
+                            <!-- Special highlight badge -->
+                            <div class="absolute top-4 left-4 bg-gold text-peacock-blue px-3 py-1 rounded-full font-body font-bold text-xs shadow-lg animate-[shimmer_2s_ease-in-out_infinite]">
+                                ★ MAIN EVENT
+                            </div>
+
+                            <!-- Event details overlay -->
+                            <div class="absolute inset-0 flex flex-col justify-end p-6 text-white">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="text-3xl animate-[heartBeat_2s_ease-in-out_infinite]">👑</div>
+                                    <h3 class="font-heading text-2xl md:text-3xl font-bold drop-shadow-lg">
+                                        Wedding (Baarat & Reception)
+                                    </h3>
+                                </div>
+                                
+                                <div class="space-y-2 font-body text-sm md:text-base">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">schedule</span>
+                                        <span>7:00 PM - 11:00 PM</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">location_on</span>
+                                        <span>Main Lawn</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">checkroom</span>
+                                        <span>Traditional Indian Wear</span>
+                                    </div>
+                                </div>
+
+                                <!-- Color palette indicator -->
+                                <div class="mt-4 flex gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-peacock-blue border-2 border-white shadow"></div>
+                                    <div class="w-6 h-6 rounded-full bg-gold border-2 border-white shadow"></div>
+                                    <div class="w-6 h-6 rounded-full bg-coral-pink border-2 border-white shadow"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Event description -->
+                        <div class="bg-white dark:bg-peacock-blue p-6">
+                            <p class="font-elegant text-sm md:text-base text-peacock-blue/80 dark:text-champagne/80 italic leading-relaxed">
+                                The grand procession of the groom (Baarat) arrives with music and dance, followed by the wedding ceremony and a magnificent reception celebrating the union of two souls.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Day 3: November 23rd -->
+            <div class="mb-12 scroll-reveal">
+                <div class="day-header mb-8">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-gradient-to-r from-gold to-warm-brass text-white rounded-full w-12 h-12 flex items-center justify-center font-heading font-bold text-xl shadow-lg">
+                            3
+                        </div>
+                        <div>
+                            <h2 class="font-heading text-3xl md:text-4xl font-bold text-peacock-blue dark:text-gold">
+                                Day 3: 23rd November
+                            </h2>
+                            <p class="font-elegant text-sm md:text-base text-emerald-green dark:text-sage-green italic">
+                                Sacred vows and blessings...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="max-w-2xl mx-auto">
+                    
+                    <!-- Phera Ceremony Event -->
+                    <div class="event-card relative rounded-2xl overflow-hidden shadow-2xl border-2 border-gold/30">
+                        <div class="corner-ornament tl"></div>
+                        <div class="corner-ornament tr"></div>
+                        <div class="corner-ornament bl"></div>
+                        <div class="corner-ornament br"></div>
+                        
+                        <!-- Event Image -->
+                        <div class="relative h-80 md:h-96">
+                            <img src="images/events/phera.jpg" alt="Phera Ceremony" class="absolute inset-0 w-full h-full object-cover"/>
+                            <div class="event-image-overlay absolute inset-0"></div>
+                            
+                            <!-- Event badge -->
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-champagne to-cream text-peacock-blue px-4 py-2 rounded-full font-body font-bold text-sm shadow-lg border-2 border-gold/50">
+                                Morning
+                            </div>
+
+                            <!-- Event details overlay -->
+                            <div class="absolute inset-0 flex flex-col justify-end p-6 text-white">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="text-3xl animate-[heartBeat_2s_ease-in-out_infinite]">🕉️</div>
+                                    <h3 class="font-heading text-2xl md:text-3xl font-bold drop-shadow-lg">
+                                        Phera Ceremony
+                                    </h3>
+                                </div>
+                                
+                                <div class="space-y-2 font-body text-sm md:text-base">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">schedule</span>
+                                        <span>9:30 AM - 1:30 PM</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">location_on</span>
+                                        <span>Banquet and Side Lawn</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">checkroom</span>
+                                        <span>Pastels</span>
+                                    </div>
+                                </div>
+
+                                <!-- Color palette indicator -->
+                                <div class="mt-4 flex gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-champagne border-2 border-white shadow"></div>
+                                    <div class="w-6 h-6 rounded-full bg-sage-green border-2 border-white shadow"></div>
+                                    <div class="w-6 h-6 rounded-full bg-salmon-pink border-2 border-white shadow"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Event description -->
+                        <div class="bg-white dark:bg-peacock-blue p-6">
+                            <p class="font-elegant text-sm md:text-base text-peacock-blue/80 dark:text-champagne/80 italic leading-relaxed">
+                                The sacred seven circles around the holy fire, where the couple makes eternal vows to each other. A serene morning ceremony filled with ancient rituals and divine blessings.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Important Information Card -->
+            <div class="scroll-reveal mt-16">
+                <div class="bg-gradient-to-br from-champagne/80 to-cream/80 dark:from-peacock-blue/80 dark:to-teal-blue/80 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-xl border-2 border-gold/30 max-w-3xl mx-auto">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="text-4xl animate-[float_3s_ease-in-out_infinite]">📋</div>
+                        <h3 class="font-heading text-2xl md:text-3xl font-bold text-peacock-blue dark:text-gold">
+                            Important Information
+                        </h3>
+                    </div>
+
+                    <div class="space-y-4 font-body text-sm md:text-base">
+                        <div class="flex items-start gap-3">
+                            <div class="text-2xl">🏨</div>
+                            <div>
+                                <p class="font-semibold text-peacock-blue dark:text-champagne">Accommodation</p>
+                                <p class="text-peacock-blue/70 dark:text-champagne/70">Rooms are available at Wild Rose Resort. Please contact us for booking assistance.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <div class="text-2xl">🚗</div>
+                            <div>
+                                <p class="font-semibold text-peacock-blue dark:text-champagne">Transportation</p>
+                                <p class="text-peacock-blue/70 dark:text-champagne/70">Shuttle services will be available from Ajmer Junction to the venue.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <div class="text-2xl">🍽️</div>
+                            <div>
+                                <p class="font-semibold text-peacock-blue dark:text-champagne">Dining</p>
+                                <p class="text-peacock-blue/70 dark:text-champagne/70">All meals will be provided during the events. Special dietary requirements can be noted in your RSVP.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <div class="text-2xl">📸</div>
+                            <div>
+                                <p class="font-semibold text-peacock-blue dark:text-champagne">Photography</p>
+                                <p class="text-peacock-blue/70 dark:text-champagne/70">Feel free to capture memories! Share your photos in our gallery section.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact CTA -->
+                    <div class="mt-8 text-center">
+                        <p class="font-elegant text-base text-peacock-blue/80 dark:text-champagne/80 mb-4 italic">
+                            Questions about the events? We're here to help!
+                        </p>
+                        <button onclick="window.location.href='rsvp.html'" class="bg-gradient-to-r from-emerald-green to-teal-blue text-white font-body font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-2xl hover:from-gold hover:to-warm-brass transition-all duration-500 transform hover:scale-105">
+                            RSVP & Contact Us
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom decorative flourish -->
+            <div class="mt-16 flex justify-center gap-4 scroll-reveal">
+                <div class="text-3xl animate-[float_3s_ease-in-out_infinite]">🌿</div>
+                <div class="text-2xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 0.5s;">🌺</div>
+                <div class="text-4xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1s;">🦚</div>
+                <div class="text-2xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1.5s;">🌸</div>
+                <div class="text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 2s;">🌹</div>
+            </div>
+
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="fixed bottom-0 left-0 right-0 z-50 border-t-2 border-gold/30 bg-champagne/95 dark:bg-peacock-blue/95 backdrop-blur-xl py-3 shadow-2xl">
+            <div class="mx-auto flex max-w-md justify-around items-center px-4">
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="index.html">
+                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">home</span>
+                    <span class="text-xs font-medium">Home</span>
+                </a>
+                
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="our-story.html">
+                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">favorite</span>
+                    <span class="text-xs font-medium">Story</span>
+                </a>
+                
+                <a class="flex flex-col items-center gap-1 text-emerald-green dark:text-gold transform scale-110" href="events.html">
+                    <div class="bg-emerald-green/10 dark:bg-gold/10 p-2 rounded-full">
+                        <span class="material-symbols-outlined text-xl animate-[heartBeat_2s_ease-in-out_infinite]">celebration</span>
+                    </div>
+                    <span class="text-xs font-bold">Events</span>
+                </a>
+                
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="venue.html">
+                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">location_on</span>
+                    <span class="text-xs font-medium">Venue</span>
+                </a>
+                
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="rsvp.html">
+                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">check_box</span>
+                    <span class="text-xs font-medium">RSVP</span>
+                </a>
+                
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="memories.html">
+                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">photo_library</span>
+                    <span class="text-xs font-medium">Memories</span>
+                </a>
+            </div>
+        </nav>
+
+    </div>
+
+    <script>
+        // Intersection Observer for scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll-reveal elements
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.scroll-reveal').forEach(element => {
+                observer.observe(element);
+            });
+
+            // Reveal first section immediately
+            const firstReveal = document.querySelector('.scroll-reveal');
+            if (firstReveal) {
+                setTimeout(() => firstReveal.classList.add('visible'), 100);
+            }
+
+            // Add staggered animation to event cards
+            document.querySelectorAll('.event-card').forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.2}s`;
+            });
+        });
+
+        console.log('🎉 Enhanced Events Page Loaded');
+        console.log('✨ All celebrations beautifully displayed');
+    </script>
+
+</body>
+</html>

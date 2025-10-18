@@ -1,0 +1,20 @@
+<svg width="192" height="192" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="192" height="192" fill="#005F69"/>
+  
+  <!-- Decorative border -->
+  <rect x="10" y="10" width="172" height="172" fill="none" stroke="#FFD700" stroke-width="2"/>
+  
+  <!-- Inner decorative elements -->
+  <circle cx="96" cy="96" r="60" fill="none" stroke="#50C878" stroke-width="3"/>
+  
+  <!-- Wedding rings -->
+  <circle cx="80" cy="90" r="20" fill="none" stroke="#FFD700" stroke-width="4"/>
+  <circle cx="112" cy="90" r="20" fill="none" stroke="#FFD700" stroke-width="4"/>
+  
+  <!-- Hearts -->
+  <text x="96" y="135" font-size="32" text-anchor="middle" fill="#FF9B8A">💕</text>
+  
+  <!-- Initials -->
+  <text x="96" y="70" font-size="24" font-family="serif" font-weight="bold" text-anchor="middle" fill="#F7E7CE">G & S</text>
+</svg>

@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: wedding-backend-api
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+    disk:
+      name: wedding-data
+      mountPath: /opt/render/project/src
+      sizeGB: 1

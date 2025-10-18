@@ -1,0 +1,19 @@
+# Node.js
+node_modules
+.env
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+pip-log.txt
+pip-delete-this-arg.txt
+
+# md guides
+*.md
+

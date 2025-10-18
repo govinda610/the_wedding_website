@@ -1,0 +1,27 @@
+{
+  "name": "Govind & Samidha's Wedding",
+  "short_name": "G&S Wedding",
+  "description": "Join us in celebrating the wedding of Govind & Samidha, November 21-23, 2025 in Pushkar, Rajasthan",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FDF6E3",
+  "theme_color": "#005F69",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "images/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "social"],
+  "lang": "en-US",
+  "dir": "ltr"
+}

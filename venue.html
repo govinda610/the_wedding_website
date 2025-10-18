@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Wild Rose, Pushkar - Venue</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        'coral-pink': '#FF9B8A',
+                        'salmon-pink': '#FFB5A7',
+                        'emerald-green': '#50C878',
+                        'sage-green': '#9CAF88',
+                        'cream': '#FDF6E3',
+                        'champagne': '#F7E7CE',
+                        'teal-blue': '#008B8B',
+                        'peacock-blue': '#005F69',
+                        'terracotta': '#E2725B',
+                        'burnt-orange': '#CC5500',
+                        'gold': '#FFD700',
+                        'warm-brass': '#B5651D',
+                    },
+                    fontFamily: {
+                        'heading': ['Playfair Display', 'serif'],
+                        'elegant': ['Cormorant Garamond', 'serif'],
+                        'body': ['Montserrat', 'sans-serif'],
+                        'script': ['Dancing Script', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            min-height: 100vh;
+        }
+
+        /* Botanical pattern */
+        .botanical-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2350C878' fill-opacity='0.08'%3E%3Cpath d='M30 30c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10zm10 0c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        /* Ornamental frame */
+        .ornamental-frame {
+            position: relative;
+        }
+
+        .ornamental-frame::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 1rem;
+            pointer-events: none;
+        }
+
+        .ornamental-frame::after {
+            content: '';
+            position: absolute;
+            inset: -16px;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 1.25rem;
+            pointer-events: none;
+        }
+
+        /* Corner decorations */
+        .corner-decoration {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .corner-decoration.top-left {
+            top: -2px;
+            left: -2px;
+            border-top: 3px solid #FFD700;
+            border-left: 3px solid #FFD700;
+        }
+
+        .corner-decoration.top-right {
+            top: -2px;
+            right: -2px;
+            border-top: 3px solid #FFD700;
+            border-right: 3px solid #FFD700;
+        }
+
+        .corner-decoration.bottom-left {
+            bottom: -2px;
+            left: -2px;
+            border-bottom: 3px solid #FFD700;
+            border-left: 3px solid #FFD700;
+        }
+
+        .corner-decoration.bottom-right {
+            bottom: -2px;
+            right: -2px;
+            border-bottom: 3px solid #FFD700;
+            border-right: 3px solid #FFD700;
+        }
+
+        /* Card hover effects */
+        .venue-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .venue-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 95, 105, 0.25);
+        }
+
+        /* Gallery image hover */
+        .gallery-image {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 95, 105, 0.3);
+        }
+
+        .gallery-image img {
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-image:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 95, 105, 0.8), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 1rem;
+        }
+
+        .gallery-image:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        /* Scroll reveal */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Map container styling */
+        .map-container {
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 95, 105, 0.2);
+            border: 3px solid rgba(255, 215, 0, 0.3);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-cream dark:bg-peacock-blue font-body text-peacock-blue dark:text-champagne">
+    
+    <!-- Background layers -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div class="botanical-pattern absolute inset-0"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-champagne/40 via-transparent to-champagne/40"></div>
+    </div>
+
+    <div class="relative flex flex-col min-h-screen">
+        
+        <!-- Header -->
+        <header class="sticky top-0 z-50 backdrop-blur-xl bg-cream/90 dark:bg-peacock-blue/90 border-b-2 border-gold/20 shadow-lg">
+            <div class="flex items-center justify-between p-4 max-w-6xl mx-auto">
+                <button onclick="window.location.href='index.html'" class="group flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-emerald-green to-teal-blue text-white hover:from-coral-pink hover:to-salmon-pink transition-all duration-300 transform hover:scale-110 shadow-lg">
+                    <span class="material-symbols-outlined group-hover:scale-110 transition-transform">arrow_back</span>
+                </button>
+                
+                <div class="flex-1 text-center">
+                    <h1 class="font-heading text-2xl md:text-3xl font-bold text-peacock-blue dark:text-champagne">
+                        Venue
+                    </h1>
+                    <div class="flex justify-center items-center gap-2 mt-1">
+                        <div class="w-8 h-0.5 bg-gradient-to-r from-transparent via-gold to-warm-brass"></div>
+                        <div class="text-gold text-xs">❖</div>
+                        <div class="w-8 h-0.5 bg-gradient-to-r from-warm-brass via-gold to-transparent"></div>
+                    </div>
+                </div>
+                
+                <div class="w-12 h-12 flex items-center justify-center">
+                    <div class="text-3xl animate-[float_4s_ease-in-out_infinite]">🏛️</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="relative flex-grow px-4 md:px-8 py-12 pb-24 max-w-6xl mx-auto w-full">
+            
+            <!-- Hero Venue Image -->
+            <div class="scroll-reveal mb-12">
+                <div class="relative ornamental-frame">
+                    <div class="corner-decoration top-left"></div>
+                    <div class="corner-decoration top-right"></div>
+                    <div class="corner-decoration bottom-left"></div>
+                    <div class="corner-decoration bottom-right"></div>
+                    
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="images/wild_rose_venue/KTK6289.jpg" alt="Wild Rose Resort" class="w-full h-64 md:h-96 object-cover"/>
+                        
+                        <!-- Gradient overlay with venue name -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-peacock-blue/90 via-peacock-blue/50 to-transparent flex flex-col justify-end p-6 md:p-10">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="text-4xl md:text-5xl animate-[float_3s_ease-in-out_infinite]">🌹</div>
+                                <h2 class="font-heading text-4xl md:text-6xl font-bold text-white drop-shadow-2xl">
+                                    Wild Rose
+                                </h2>
+                            </div>
+                            <p class="font-script text-2xl md:text-3xl text-champagne">
+                                Pushkar, Rajasthan
+                            </p>
+                            
+                            <!-- Location tag -->
+                            <div class="mt-4 inline-flex items-center gap-2 bg-white/20 backdrop-blur-md rounded-full px-4 py-2 w-fit">
+                                <span class="material-symbols-outlined text-gold">location_on</span>
+                                <span class="font-body text-sm text-white">Tilora, Pushkar</span>
+                            </div>
+                        </div>
+
+                        <!-- Floating decorative elements -->
+                        <div class="absolute top-6 right-6 text-5xl animate-[float_4s_ease-in-out_infinite] opacity-70">🦚</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Venue Description -->
+            <div class="scroll-reveal mb-16">
+                <div class="bg-white/80 dark:bg-peacock-blue/80 backdrop-blur-md rounded-2xl p-6 md:p-10 shadow-xl border-2 border-gold/20 venue-card">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="text-5xl animate-[shimmer_3s_ease-in-out_infinite]">🏛️</div>
+                        <div class="flex-1">
+                            <h3 class="font-heading text-3xl md:text-4xl font-bold text-peacock-blue dark:text-gold mb-2">
+                                An Oasis in the Desert
+                            </h3>
+                            <div class="w-24 h-1 bg-gradient-to-r from-emerald-green to-teal-blue rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <p class="font-elegant text-base md:text-lg leading-relaxed text-peacock-blue/90 dark:text-champagne/90 mb-6">
+                        Tucked into the tranquil hillsides of the Pushkar Aravali hills, Wild Rose marries rustic charm with refined comfort. Featuring a mix of cozy cottages and elegant Swiss-style tents, many with private plunge pools, the property's design weaves in lush gardens, open lawns, and water features to create an immersive oasis in the desert.
+                    </p>
+
+                    <p class="font-body text-base text-peacock-blue/80 dark:text-champagne/80 leading-relaxed">
+                        With its peaceful setting just a short drive from Pushkar's city center, it provides the ideal balance of serenity and accessibility — the perfect canvas for our celebration of love.
+                    </p>
+
+                    <!-- Venue Features -->
+                    <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="text-center bg-gradient-to-br from-emerald-green/10 to-sage-green/10 rounded-xl p-4">
+                            <div class="text-3xl mb-2">🏊</div>
+                            <p class="font-body text-xs md:text-sm font-semibold text-peacock-blue dark:text-champagne">Plunge Pools</p>
+                        </div>
+                        <div class="text-center bg-gradient-to-br from-coral-pink/10 to-salmon-pink/10 rounded-xl p-4">
+                            <div class="text-3xl mb-2">🌳</div>
+                            <p class="font-body text-xs md:text-sm font-semibold text-peacock-blue dark:text-champagne">Lush Gardens</p>
+                        </div>
+                        <div class="text-center bg-gradient-to-br from-peacock-blue/10 to-teal-blue/10 rounded-xl p-4">
+                            <div class="text-3xl mb-2">🏕️</div>
+                            <p class="font-body text-xs md:text-sm font-semibold text-peacock-blue dark:text-champagne">Swiss Tents</p>
+                        </div>
+                        <div class="text-center bg-gradient-to-br from-gold/10 to-warm-brass/10 rounded-xl p-4">
+                            <div class="text-3xl mb-2">💎</div>
+                            <p class="font-body text-xs md:text-sm font-semibold text-peacock-blue dark:text-champagne">Luxury Comfort</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Google Map Section -->
+            <div class="scroll-reveal mb-16">
+                <div class="mb-6 text-center">
+                    <h3 class="font-heading text-3xl md:text-4xl font-bold text-peacock-blue dark:text-gold mb-3">
+                        How to Reach
+                    </h3>
+                    <div class="flex justify-center items-center gap-3">
+                        <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-gold to-warm-brass"></div>
+                        <div class="text-gold text-sm">❖</div>
+                        <div class="w-16 h-0.5 bg-gradient-to-r from-warm-brass via-gold to-transparent"></div>
+                    </div>
+                </div>
+
+                <div class="map-container relative">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3591.8744!2d74.5347!3d26.5149!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396be6d3f0dbf8c1%3A0x123456789!2sWild%20Rose%20Resort%20%26%20Spa%2C%20Pushkar!5e0!3m2!1sen!2sin!4v1234567890!5m2!1sen!2sin" 
+                        width="100%" 
+                        height="400" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        class="rounded-2xl">
+                    </iframe>
+                </div>
+
+                <!-- Address & Contact Card -->
+                <div class="mt-6 bg-white/80 dark:bg-peacock-blue/80 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-xl border-2 border-emerald-green/20">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Address -->
+                        <div class="flex items-start gap-4">
+                            <div class="text-4xl animate-[float_3s_ease-in-out_infinite]">📍</div>
+                            <div>
+                                <h4 class="font-heading text-lg md:text-xl font-bold text-peacock-blue dark:text-gold mb-2">
+                                    Address
+                                </h4>
+                                <p class="font-body text-sm md:text-base text-peacock-blue/80 dark:text-champagne/80 leading-relaxed">
+                                    Khasra No 2031, Village Tilora<br/>
+                                    Tilora-Kishanpura Road<br/>
+                                    Pushkar, Rajasthan 305022
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Contact -->
+                        <div class="flex items-start gap-4">
+                            <div class="text-4xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1s;">📞</div>
+                            <div>
+                                <h4 class="font-heading text-lg md:text-xl font-bold text-peacock-blue dark:text-gold mb-2">
+                                    Contact
+                                </h4>
+                                <p class="font-body text-sm md:text-base text-peacock-blue/80 dark:text-champagne/80 mb-4">
+                                    +91 9024997279
+                                </p>
+                                <button onclick="window.open('https://maps.google.com?q=Wild+Rose+Resort+Spa+Pushkar+Tilora', '_blank')" class="group bg-gradient-to-r from-emerald-green to-teal-blue text-white font-body font-semibold text-sm md:text-base py-3 px-6 rounded-full shadow-lg hover:shadow-2xl hover:from-gold hover:to-warm-brass transition-all duration-500 transform hover:scale-105">
+                                    <span class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined group-hover:animate-[heartBeat_1s_ease-in-out_infinite]">directions</span>
+                                        <span>Get Directions</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Local Attractions -->
+            <div class="scroll-reveal mb-16">
+                <div class="mb-8 text-center">
+                    <h3 class="font-heading text-3xl md:text-4xl font-bold text-peacock-blue dark:text-gold mb-3">
+                        Explore Pushkar
+                    </h3>
+                    <p class="font-elegant text-base md:text-lg text-emerald-green dark:text-sage-green italic">
+                        Sacred sites and vibrant culture await
+                    </p>
+                    <div class="flex justify-center items-center gap-3 mt-3">
+                        <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-gold to-warm-brass"></div>
+                        <div class="text-gold text-sm">❖</div>
+                        <div class="w-16 h-0.5 bg-gradient-to-r from-warm-brass via-gold to-transparent"></div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Pushkar Lake -->
+                    <a href="https://www.google.com/search?q=Pushkar+Lake+Rajasthan" target="_blank" class="venue-card bg-white/70 dark:bg-peacock-blue/70 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl border-2 border-teal-blue/20 hover:scale-105 transition-transform duration-300 cursor-pointer">
+                        <div class="relative h-40">
+                            <img src="images/wild_rose_venue/Pushkar_lake.webp" alt="Pushkar Lake" class="w-full h-full object-cover"/>
+                            <div class="absolute inset-0 bg-gradient-to-t from-teal-blue/80 to-transparent"></div>
+                            <div class="absolute top-3 right-3 text-3xl animate-[float_3s_ease-in-out_infinite]">💧</div>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-heading text-xl font-bold text-peacock-blue dark:text-gold mb-2">
+                                Pushkar Lake
+                            </h4>
+                            <p class="font-elegant text-sm text-peacock-blue/70 dark:text-champagne/70 italic">
+                                Sacred lake surrounded by 52 ghats, perfect for peaceful morning walks and spiritual reflection.
+                            </p>
+                            <div class="mt-3 flex items-center gap-2 text-emerald-green dark:text-sage-green font-body text-xs">
+                                <span class="material-symbols-outlined text-sm">route</span>
+                                <span>5 min drive from venue</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Brahma Temple -->
+                    <a href="https://www.google.com/search?q=Brahma+Temple+Pushkar" target="_blank" class="venue-card bg-white/70 dark:bg-peacock-blue/70 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl border-2 border-coral-pink/20 hover:scale-105 transition-transform duration-300 cursor-pointer">
+                        <div class="relative h-40">
+                            <img src="images/wild_rose_venue/bhrama temple pushkar.webp" alt="Brahma Temple" class="w-full h-full object-cover"/>
+                            <div class="absolute inset-0 bg-gradient-to-t from-coral-pink/80 to-transparent"></div>
+                            <div class="absolute top-3 right-3 text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1s;">🕉️</div>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-heading text-xl font-bold text-peacock-blue dark:text-gold mb-2">
+                                Brahma Temple
+                            </h4>
+                            <p class="font-elegant text-sm text-peacock-blue/70 dark:text-champagne/70 italic">
+                                One of the few Brahma temples in the world, a must-visit sacred site with stunning architecture.
+                            </p>
+                            <div class="mt-3 flex items-center gap-2 text-emerald-green dark:text-sage-green font-body text-xs">
+                                <span class="material-symbols-outlined text-sm">route</span>
+                                <span>8 min drive from venue</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Pushkar Bazaar -->
+                    <a href="https://www.google.com/search?q=Pushkar+Bazaar+Market" target="_blank" class="venue-card bg-white/70 dark:bg-peacock-blue/70 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl border-2 border-gold/20 hover:scale-105 transition-transform duration-300 cursor-pointer">
+                        <div class="relative h-40">
+                            <img src="images/wild_rose_venue/pushkar baazar.webp" alt="Pushkar Bazaar" class="w-full h-full object-cover"/>
+                            <div class="absolute inset-0 bg-gradient-to-t from-gold/80 to-transparent"></div>
+                            <div class="absolute top-3 right-3 text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 2s;">🛍️</div>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-heading text-xl font-bold text-peacock-blue dark:text-gold mb-2">
+                                Pushkar Bazaar
+                            </h4>
+                            <p class="font-elegant text-sm text-peacock-blue/70 dark:text-champagne/70 italic">
+                                Vibrant markets offering traditional crafts, jewelry, textiles, and authentic Rajasthani souvenirs.
+                            </p>
+                            <div class="mt-3 flex items-center gap-2 text-emerald-green dark:text-sage-green font-body text-xs">
+                                <span class="material-symbols-outlined text-sm">route</span>
+                                <span>10 min drive from venue</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Street Food -->
+                    <a href="https://www.google.com/search?q=Pushkar+Street+Food+Malpua" target="_blank" class="venue-card bg-white/70 dark:bg-peacock-blue/70 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl border-2 border-salmon-pink/20 hover:scale-105 transition-transform duration-300 cursor-pointer">
+                        <div class="relative h-40">
+                            <img src="images/wild_rose_venue/Binge on Street Food.webp" alt="Pushkar Street Food" class="w-full h-full object-cover"/>
+                            <div class="absolute inset-0 bg-gradient-to-t from-salmon-pink/80 to-transparent"></div>
+                            <div class="absolute top-3 right-3 text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 3s;">🍽️</div>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-heading text-xl font-bold text-peacock-blue dark:text-gold mb-2">
+                                Binge on Street Food
+                            </h4>
+                            <p class="font-elegant text-sm text-peacock-blue/70 dark:text-champagne/70 italic">
+                                Savor authentic Rajasthani delicacies like malpua, kachori, and lassi from famous street food stalls.
+                            </p>
+                            <div class="mt-3 flex items-center gap-2 text-emerald-green dark:text-sage-green font-body text-xs">
+                                <span class="material-symbols-outlined text-sm">route</span>
+                                <span>10 min drive from venue</span>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+            <!-- Venue Gallery -->
+            <div class="scroll-reveal mb-12">
+                <div class="mb-8 text-center">
+                    <h3 class="font-heading text-3xl md:text-4xl font-bold text-peacock-blue dark:text-gold mb-3">
+                        Venue Gallery
+                    </h3>
+                    <p class="font-script text-xl md:text-2xl text-emerald-green dark:text-sage-green">
+                        A glimpse of paradise
+                    </p>
+                    <div class="flex justify-center items-center gap-3 mt-3">
+                        <div class="text-3xl animate-[float_3s_ease-in-out_infinite]">🦚</div>
+                        <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-gold to-warm-brass"></div>
+                        <div class="text-gold text-sm">❖</div>
+                        <div class="w-16 h-0.5 bg-gradient-to-r from-warm-brass via-gold to-transparent"></div>
+                        <div class="text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1.5s;">🌹</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    
+                    <div class="gallery-image rounded-xl overflow-hidden border-2 border-gold/30 shadow-lg">
+                        <img src="images/wild_rose_venue/24381aac417011eda9980a58a9feac02.jpg" alt="Wild Rose Venue" class="w-full h-48 object-cover"/>
+                        <div class="gallery-overlay">
+                            <p class="font-elegant text-white text-sm">Garden View</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-image rounded-xl overflow-hidden border-2 border-gold/30 shadow-lg">
+                        <img src="images/wild_rose_venue/4ef32a5cbe9d11edab1d0a58a9feac02.jpg" alt="Wild Rose Venue" class="w-full h-48 object-cover"/>
+                        <div class="gallery-overlay">
+                            <p class="font-elegant text-white text-sm">Luxury Accommodations</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-image rounded-xl overflow-hidden border-2 border-gold/30 shadow-lg">
+                        <img src="images/wild_rose_venue/65395280be9f11edb0cb0a58a9feac02.jpg" alt="Wild Rose Venue" class="w-full h-48 object-cover"/>
+                        <div class="gallery-overlay">
+                            <p class="font-elegant text-white text-sm">Event Spaces</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-image rounded-xl overflow-hidden border-2 border-gold/30 shadow-lg">
+                        <img src="images/wild_rose_venue/a555fb4e6fb611ed8b5b0a58a9feac02.jpg" alt="Wild Rose Venue" class="w-full h-48 object-cover"/>
+                        <div class="gallery-overlay">
+                            <p class="font-elegant text-white text-sm">Scenic Beauty</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Travel Tips Card -->
+            <div class="scroll-reveal">
+                <div class="bg-gradient-to-br from-champagne/80 to-cream/80 dark:from-peacock-blue/80 dark:to-teal-blue/80 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-xl border-2 border-gold/30">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="text-4xl animate-[float_3s_ease-in-out_infinite]">✈️</div>
+                        <h3 class="font-heading text-2xl md:text-3xl font-bold text-peacock-blue dark:text-gold">
+                            Travel Tips
+                        </h3>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 font-body text-sm md:text-base">
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3">
+                                <div class="text-2xl">🛫</div>
+                                <div>
+                                    <p class="font-semibold text-peacock-blue dark:text-champagne mb-1">Nearest Airport</p>
+                                    <p class="text-peacock-blue/70 dark:text-champagne/70">Jaipur International Airport (140 km, ~2.5 hours)</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3">
+                                <div class="text-2xl">🚂</div>
+                                <div>
+                                    <p class="font-semibold text-peacock-blue dark:text-champagne mb-1">Nearest Railway Station</p>
+                                    <p class="text-peacock-blue/70 dark:text-champagne/70">Ajmer Junction (15 km, ~30 minutes)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3">
+                                <div class="text-2xl">🌡️</div>
+                                <div>
+                                    <p class="font-semibold text-peacock-blue dark:text-champagne mb-1">Weather in November</p>
+                                    <p class="text-peacock-blue/70 dark:text-champagne/70">Pleasant days (20-25°C), cool nights. Perfect for celebrations!</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3">
+                                <div class="text-2xl">💼</div>
+                                <div>
+                                    <p class="font-semibold text-peacock-blue dark:text-champagne mb-1">What to Pack</p>
+                                    <p class="text-peacock-blue/70 dark:text-champagne/70">Traditional attire, comfortable shoes, light jacket for evenings.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom decorative line -->
+                    <div class="mt-6 pt-6 border-t border-gold/20 text-center">
+                        <p class="font-elegant text-base text-peacock-blue/80 dark:text-champagne/80 italic">
+                            Need help with travel arrangements? Contact us anytime!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom flourish -->
+            <div class="mt-12 flex justify-center gap-4 scroll-reveal">
+                <div class="text-3xl animate-[float_3s_ease-in-out_infinite]">🌿</div>
+                <div class="text-2xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 0.5s;">🏛️</div>
+                <div class="text-4xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1s;">🦚</div>
+                <div class="text-2xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1.5s;">💐</div>
+                <div class="text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 2s;">🌺</div>
+            </div>
+
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="fixed bottom-0 left-0 right-0 z-50 border-t-2 border-gold/30 bg-champagne/95 dark:bg-peacock-blue/95 backdrop-blur-xl py-3 shadow-2xl">
+            <div class="mx-auto flex max-w-md justify-around items-center px-4">
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="index.html">
+                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">home</span>
+                    <span class="text-xs font-medium">Home</span>
+                </a>
+                
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="our-story.html">
+                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">favorite</span>
+                    <span class="text-xs font-medium">Story</span>
+                </a>
+                
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="events.html">
+                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">celebration</span>
+                    <span class="text-xs font-medium">Events</span>
+                </a>
+                
+                <a class="flex flex-col items-center gap-1 text-emerald-green dark:text-gold transform scale-110" href="venue.html">
+                    <div class="bg-emerald-green/10 dark:bg-gold/10 p-2 rounded-full">
+                        <span class="material-symbols-outlined text-xl animate-[heartBeat_2s_ease-in-out_infinite]">location_on</span>
+                    </div>
+                    <span class="text-xs font-bold">Venue</span>
+                </a>
+                
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="rsvp.html">
+                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">check_box</span>
+                    <span class="text-xs font-medium">RSVP</span>
+                </a>
+                
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="memories.html">
+                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">photo_library</span>
+                    <span class="text-xs font-medium">Memories</span>
+                </a>
+            </div>
+        </nav>
+
+    </div>
+
+    <script>
+        // Intersection Observer for scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll-reveal elements
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.scroll-reveal').forEach(element => {
+                observer.observe(element);
+            });
+
+            // Reveal first section immediately
+            const firstReveal = document.querySelector('.scroll-reveal');
+            if (firstReveal) {
+                setTimeout(() => firstReveal.classList.add('visible'), 100);
+            }
+        });
+
+        console.log('🏛️ Enhanced Venue Page Loaded');
+        console.log('🌹 Wild Rose Resort beautifully showcased');
+    </script>
+
+</body>
+</html>
