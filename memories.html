@@ -765,7 +765,7 @@
             if (item.type === 'photo') {
                 itemDiv.innerHTML = `
                     <div class="gallery-item bg-white/70 dark:bg-peacock-blue/70 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border-2 border-gold/20">
-                        <img alt="User uploaded photo" class="w-full object-cover" src="http://localhost:8001/api/uploads/${item.content}"/>
+                        <img alt="User uploaded photo" class="w-full object-cover" src="/api/uploads/${item.content}"/>
                     </div>
                 `;
             } else if (item.type === 'testimonial') {
@@ -790,7 +790,7 @@
                     
                     if (contentData.photo) {
                         html += `
-                            <img alt="User uploaded photo" class="w-full object-cover" src="http://localhost:8001/api/uploads/${contentData.photo}"/>
+                            <img alt="User uploaded photo" class="w-full object-cover" src="/api/uploads/${contentData.photo}"/>
                         `;
                     }
                     
