@@ -11,6 +11,7 @@ class RSVPRequest(BaseModel):
     email: Optional[str] = None
     dietary_requirements: Optional[str] = None
     special_requests: Optional[str] = None
+    side: Optional[str] = "Not Specified"
 
 class RSVPResponse(BaseModel):
     id: int
@@ -21,6 +22,7 @@ class RSVPResponse(BaseModel):
     email: Optional[str]
     dietary_requirements: Optional[str]
     special_requests: Optional[str]
+    side: str
     created_at: datetime
 
 # Grapevine Models

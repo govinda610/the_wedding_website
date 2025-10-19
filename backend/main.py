@@ -70,7 +70,8 @@ async def submit_rsvp(rsvp: RSVPRequest, db: Session = Depends(get_db)):
             phone=rsvp.phone,
             email=rsvp.email,
             dietary_requirements=rsvp.dietary_requirements,
-            special_requests=rsvp.special_requests
+            special_requests=rsvp.special_requests,
+            side=rsvp.side
         )
         db.add(db_rsvp)
         db.commit()
@@ -85,6 +86,7 @@ async def submit_rsvp(rsvp: RSVPRequest, db: Session = Depends(get_db)):
             email=db_rsvp.email,
             dietary_requirements=db_rsvp.dietary_requirements,
             special_requests=db_rsvp.special_requests,
+            side=db_rsvp.side,
             created_at=db_rsvp.created_at
         )
     except Exception as e:

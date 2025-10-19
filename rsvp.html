@@ -383,6 +383,25 @@
                             />
                         </div>
 
+                        <!-- Guest Side -->
+                        <div>
+                            <label class="font-elegant text-lg text-peacock-blue dark:text-champagne mb-3 block" for="side">
+                                <span class="material-symbols-outlined text-xl align-middle mr-2">groups</span>
+                                Whose side are you on?
+                            </label>
+                            <select
+                                id="side"
+                                name="side"
+                                required
+                                class="enhanced-input w-full border-2 border-champagne dark:border-peacock-blue/50 rounded-xl px-6 py-4 font-body text-base bg-white/80 dark:bg-peacock-blue/30 text-peacock-blue dark:text-champagne focus:border-emerald-green focus:ring-0"
+                                onchange="markFilled(this)"
+                            >
+                                <option value="Bride's Side">Bride's Side</option>
+                                <option value="Groom's Side">Groom's Side</option>
+                                <option value="Just Here for the food!">Just here for the food!</option>
+                            </select>
+                        </div>
+
                         <!-- Contact Information -->
                         <div class="space-y-6">
                             <div>
@@ -689,6 +708,7 @@
             const attending = formData.get('attending');
             const guests = formData.get('guests');
             const name = formData.get('name');
+            const side = formData.get('side');
             const phone = formData.get('phone');
             const email = formData.get('email');
             const dietary = formData.get('dietary');
@@ -716,6 +736,7 @@
                 attending: attending,
                 guest_count: parseInt(guests) || 1,
                 name: name || '',
+                side: side,
                 phone: phone || null,
                 email: email || null,
                 dietary_requirements: dietary || null,

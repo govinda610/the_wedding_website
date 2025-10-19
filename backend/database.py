@@ -30,6 +30,7 @@ class RSVPModel(Base):
     email = Column(String)
     dietary_requirements = Column(String)
     special_requests = Column(Text)
+    side = Column(String, default="Not Specified")
     created_at = Column(DateTime, default=func.now())
 
 class GrapevineModel(Base):
