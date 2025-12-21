@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Govind & Samidha's Love Story</title>
-    
+
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect"/>
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-    
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    
+
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -43,7 +46,7 @@
             }
         }
     </script>
-    
+
     <style>
         body {
             min-height: 100vh;
@@ -57,8 +60,8 @@
         /* Peacock feather pattern */
         .peacock-pattern {
             background-image: radial-gradient(circle at 20% 80%, rgba(0, 95, 105, 0.08) 0%, transparent 50%),
-                              radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
-                              radial-gradient(circle at 40% 40%, rgba(80, 200, 120, 0.06) 0%, transparent 50%);
+                radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(80, 200, 120, 0.06) 0%, transparent 50%);
         }
 
         /* Animations */
@@ -67,6 +70,7 @@
                 opacity: 0;
                 transform: translateY(40px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -78,6 +82,7 @@
                 opacity: 0;
                 transform: translateX(-60px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -89,6 +94,7 @@
                 opacity: 0;
                 transform: translateX(60px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -100,6 +106,7 @@
                 opacity: 0;
                 transform: scale(0.9);
             }
+
             to {
                 opacity: 1;
                 transform: scale(1);
@@ -107,24 +114,51 @@
         }
 
         @keyframes drawLine {
-            from { height: 0%; }
-            to { height: 100%; }
+            from {
+                height: 0%;
+            }
+
+            to {
+                height: 100%;
+            }
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         @keyframes heartBeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         @keyframes shimmer {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
+            0% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.5;
+            }
         }
 
         /* Timeline styles */
@@ -138,10 +172,10 @@
             top: 0;
             bottom: 0;
             width: 3px;
-            background: linear-gradient(to bottom, 
-                rgba(255, 215, 0, 0.3) 0%,
-                rgba(80, 200, 120, 0.5) 50%,
-                rgba(255, 215, 0, 0.3) 100%);
+            background: linear-gradient(to bottom,
+                    rgba(255, 215, 0, 0.3) 0%,
+                    rgba(80, 200, 120, 0.5) 50%,
+                    rgba(255, 215, 0, 0.3) 100%);
             transform: translateX(-50%);
         }
 
@@ -282,7 +316,7 @@
 </head>
 
 <body class="bg-cream dark:bg-peacock-blue font-body text-peacock-blue dark:text-champagne">
-    
+
     <!-- Background decorative layers -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden">
         <div class="botanical-bg absolute inset-0 opacity-40"></div>
@@ -291,14 +325,16 @@
     </div>
 
     <div class="relative flex min-h-screen w-full flex-col">
-        
+
         <!-- Header -->
-        <header class="sticky top-0 z-50 backdrop-blur-xl bg-cream/80 dark:bg-peacock-blue/80 border-b-2 border-gold/20 shadow-lg">
+        <header
+            class="sticky top-0 z-50 backdrop-blur-xl bg-cream/80 dark:bg-peacock-blue/80 border-b-2 border-gold/20 shadow-lg">
             <div class="flex items-center justify-between p-4 max-w-4xl mx-auto">
-                <button onclick="window.location.href='index.html'" class="group flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-teal-blue to-peacock-blue text-white hover:from-emerald-green hover:to-teal-blue transition-all duration-300 transform hover:scale-110 shadow-lg">
+                <button onclick="window.location.href='index.html'"
+                    class="group flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-teal-blue to-peacock-blue text-white hover:from-emerald-green hover:to-teal-blue transition-all duration-300 transform hover:scale-110 shadow-lg">
                     <span class="material-symbols-outlined group-hover:scale-110 transition-transform">arrow_back</span>
                 </button>
-                
+
                 <div class="flex-1 text-center">
                     <h1 class="font-heading text-2xl md:text-3xl font-bold text-peacock-blue dark:text-champagne">
                         Our Story
@@ -309,7 +345,7 @@
                         <div class="w-8 h-0.5 bg-gradient-to-r from-warm-brass via-gold to-transparent"></div>
                     </div>
                 </div>
-                
+
                 <div class="w-12 h-12 flex items-center justify-center">
                     <div class="text-3xl animate-[float_4s_ease-in-out_infinite]">💕</div>
                 </div>
@@ -318,7 +354,7 @@
 
         <!-- Main Content -->
         <main class="relative flex-grow pb-24 max-w-4xl mx-auto w-full px-4 md:px-8 py-12">
-            
+
             <!-- Intro Section with Couple Icons -->
             <section class="story-section mb-20">
                 <div class="text-center">
@@ -328,13 +364,14 @@
                         <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-emerald-green to-sage-green"></div>
                         <div class="text-4xl animate-[heartBeat_2s_ease-in-out_infinite]">💕</div>
                         <div class="w-16 h-0.5 bg-gradient-to-r from-sage-green via-emerald-green to-transparent"></div>
-                        <div class="text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1.5s;">🌸</div>
+                        <div class="text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1.5s;">🌸
+                        </div>
                     </div>
 
                     <h2 class="font-heading text-4xl md:text-5xl font-bold text-peacock-blue dark:text-gold mb-6">
                         A Love Written in the Stars
                     </h2>
-                    
+
                     <!-- Couple avatars with ornamental frames -->
                     <div class="flex justify-center items-center gap-6 mb-8">
                         <!-- Govind's Photo -->
@@ -343,34 +380,47 @@
                             <div class="corner-decoration top-right"></div>
                             <div class="corner-decoration bottom-left"></div>
                             <div class="corner-decoration bottom-right"></div>
-                            
-                            <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-gold shadow-2xl story-card">
-                                <img src="images/our_story/Govind Image 2 a love written in the stars.jpeg" alt="Govind" class="w-full h-full object-cover"/>
+
+                            <div
+                                class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-gold shadow-2xl story-card">
+                                <img src="images/our_story/Govind Image 2 a love written in the stars.jpeg" alt="Govind"
+                                    class="w-full h-full object-cover" />
                             </div>
-                            <p class="text-center mt-3 font-script text-xl md:text-2xl text-peacock-blue dark:text-gold">Govind</p>
+                            <p
+                                class="text-center mt-3 font-script text-xl md:text-2xl text-peacock-blue dark:text-gold">
+                                Govind</p>
                         </div>
-                        
+
                         <div class="text-5xl md:text-6xl text-gold animate-[heartBeat_2s_ease-in-out_infinite]">
                             💕
                         </div>
-                        
+
                         <!-- Samidha's Photo -->
                         <div class="relative">
                             <div class="corner-decoration top-left"></div>
                             <div class="corner-decoration top-right"></div>
                             <div class="corner-decoration bottom-left"></div>
                             <div class="corner-decoration bottom-right"></div>
-                            
-                            <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-gold shadow-2xl story-card">
-                                <img src="images/our_story/Samidha Image a love written in the stars.jpg" alt="Samidha" class="w-full h-full object-cover"/>
+
+                            <div
+                                class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-gold shadow-2xl story-card">
+                                <img src="images/our_story/Samidha Image a love written in the stars.jpg" alt="Samidha"
+                                    class="w-full h-full object-cover" />
                             </div>
-                            <p class="text-center mt-3 font-script text-xl md:text-2xl text-peacock-blue dark:text-gold">Samidha</p>
+                            <p
+                                class="text-center mt-3 font-script text-xl md:text-2xl text-peacock-blue dark:text-gold">
+                                Samidha</p>
                         </div>
                     </div>
 
-                    <div class="max-w-2xl mx-auto bg-white/60 dark:bg-peacock-blue/60 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-xl border-2 border-gold/20">
-                        <p class="font-elegant text-lg md:text-xl leading-relaxed text-peacock-blue dark:text-champagne italic">
-                            They say some connections are meant to happen, just not too soon. Despite being from the same college, studying the same course, and even sharing similar backgrounds, we somehow never crossed paths back then. Destiny clearly had a better plan — it waited until we were ready for each other.
+                    <div
+                        class="max-w-2xl mx-auto bg-white/60 dark:bg-peacock-blue/60 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-xl border-2 border-gold/20">
+                        <p
+                            class="font-elegant text-lg md:text-xl leading-relaxed text-peacock-blue dark:text-champagne italic">
+                            They say some connections are meant to happen, just not too soon. Despite being from the
+                            same college, studying the same course, and even sharing similar backgrounds, we somehow
+                            never crossed paths back then. Destiny clearly had a better plan — it waited until we were
+                            ready for each other.
                         </p>
                     </div>
                 </div>
@@ -385,7 +435,7 @@
                 <!-- Story Chapter 1: Plot Twist Alert -->
                 <section class="story-section mb-16 md:mb-24">
                     <div class="grid md:grid-cols-2 gap-8 items-center">
-                        
+
                         <!-- Left: Image (Desktop) / Top (Mobile) -->
                         <div class="md:order-1 order-2">
                             <div class="relative ornamental-frame">
@@ -393,41 +443,55 @@
                                 <div class="corner-decoration top-right"></div>
                                 <div class="corner-decoration bottom-left"></div>
                                 <div class="corner-decoration bottom-right"></div>
-                                
+
                                 <div class="relative overflow-hidden rounded-2xl shadow-2xl story-card group">
-                                    <img src="images/our_story/Plot Twist Alert.jpg" alt="Plot Twist Alert" class="w-full h-64 md:h-80 object-cover transition-transform duration-700 group-hover:scale-110"/>
-                                    
+                                    <img src="images/our_story/Plot Twist Alert.jpg" alt="Plot Twist Alert"
+                                        class="w-full h-64 md:h-80 object-cover transition-transform duration-700 group-hover:scale-110" />
+
                                     <!-- Overlay on hover -->
-                                    <div class="absolute inset-0 bg-gradient-to-t from-peacock-blue/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-peacock-blue/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                                         <p class="font-script text-white text-2xl">The First Meeting...</p>
                                     </div>
                                 </div>
 
                                 <!-- Floating decorative elements -->
-                                <div class="absolute -top-6 -right-6 text-5xl animate-[float_4s_ease-in-out_infinite] opacity-70">🦚</div>
-                                <div class="absolute -bottom-6 -left-6 text-4xl animate-[float_5s_ease-in-out_infinite] opacity-70" style="animation-delay: 2s;">🌺</div>
+                                <div
+                                    class="absolute -top-6 -right-6 text-5xl animate-[float_4s_ease-in-out_infinite] opacity-70">
+                                    🦚</div>
+                                <div class="absolute -bottom-6 -left-6 text-4xl animate-[float_5s_ease-in-out_infinite] opacity-70"
+                                    style="animation-delay: 2s;">🌺</div>
                             </div>
                         </div>
 
                         <!-- Right: Content (Desktop) / Bottom (Mobile) -->
                         <div class="md:order-2 order-1 relative">
                             <!-- Timeline dot (desktop only) -->
-                            <div class="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 justify-center">
+                            <div
+                                class="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 justify-center">
                                 <div class="timeline-dot active"></div>
                             </div>
 
-                            <div class="bg-white/70 dark:bg-peacock-blue/70 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-xl border-2 border-coral-pink/30 story-card">
+                            <div
+                                class="bg-white/70 dark:bg-peacock-blue/70 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-xl border-2 border-coral-pink/30 story-card">
                                 <div class="flex items-center gap-3 mb-4">
                                     <div class="text-4xl animate-[shimmer_3s_ease-in-out_infinite]">😱</div>
-                                    <h3 class="font-heading text-3xl md:text-4xl font-bold text-coral-pink dark:text-salmon-pink">
+                                    <h3
+                                        class="font-heading text-3xl md:text-4xl font-bold text-coral-pink dark:text-salmon-pink">
                                         Plot Twist Alert!
                                     </h3>
                                 </div>
-                                
+
                                 <div class="w-24 h-1 bg-gradient-to-r from-coral-pink to-gold mb-6 rounded-full"></div>
-                                
-                                <p class="font-body text-base md:text-lg leading-relaxed text-peacock-blue dark:text-champagne">
-                                    When we finally met, the conversation flowed, the laughter came easy, and something just clicked. We liked each other instantly. Well, almost instantly. Because right after that, he panicked and ran. The idea of forever can make even the bravest man nervous (In his defense, he is quite dumb). Luckily, clarity struck soon, and he realized what he almost lost and came right back with the confidence he has had ever since then.
+
+                                <p
+                                    class="font-body text-base md:text-lg leading-relaxed text-peacock-blue dark:text-champagne">
+                                    When we finally met, the conversation flowed, the laughter came easy, and something
+                                    just clicked. We liked each other instantly. Well, almost instantly. Because right
+                                    after that, he panicked and ran. The idea of forever can make even the bravest man
+                                    nervous (In his defense, he is quite dumb). Luckily, clarity struck soon, and he
+                                    realized what he almost lost and came right back with the confidence he has had ever
+                                    since then.
                                 </p>
 
                                 <!-- Decorative quote marks -->
@@ -442,26 +506,34 @@
                 <!-- Story Chapter 2: Perfect Moment -->
                 <section class="story-section mb-16 md:mb-24">
                     <div class="grid md:grid-cols-2 gap-8 items-center">
-                        
+
                         <!-- Left: Content (Desktop) / Top (Mobile) -->
                         <div class="md:order-1 order-1 relative">
                             <!-- Timeline dot (desktop only) -->
-                            <div class="hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 justify-center">
+                            <div
+                                class="hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 justify-center">
                                 <div class="timeline-dot"></div>
                             </div>
 
-                            <div class="bg-white/70 dark:bg-peacock-blue/70 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-xl border-2 border-emerald-green/30 story-card">
+                            <div
+                                class="bg-white/70 dark:bg-peacock-blue/70 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-xl border-2 border-emerald-green/30 story-card">
                                 <div class="flex items-center gap-3 mb-4">
                                     <div class="text-4xl animate-[shimmer_3s_ease-in-out_infinite]">✨</div>
-                                    <h3 class="font-heading text-3xl md:text-4xl font-bold text-emerald-green dark:text-sage-green">
+                                    <h3
+                                        class="font-heading text-3xl md:text-4xl font-bold text-emerald-green dark:text-sage-green">
                                         The 'Wait, We're Actually Perfect' Moment
                                     </h3>
                                 </div>
-                                
-                                <div class="w-24 h-1 bg-gradient-to-r from-emerald-green to-gold mb-6 rounded-full"></div>
-                                
-                                <p class="font-body text-base md:text-lg leading-relaxed text-peacock-blue dark:text-champagne">
-                                    Then it happened. Amidst shared laughter over silly jokes and deep conversations under starlit skies, the thought dawned: "Oh. This is it." His calm balances her storm, her creativity colors his world. It wasn't just love; it was the universe giving a very loud, very clear "duh." They were, in fact, perfect for each other.
+
+                                <div class="w-24 h-1 bg-gradient-to-r from-emerald-green to-gold mb-6 rounded-full">
+                                </div>
+
+                                <p
+                                    class="font-body text-base md:text-lg leading-relaxed text-peacock-blue dark:text-champagne">
+                                    Then it happened. Amidst shared laughter over silly jokes and deep conversations
+                                    under starlit skies, the thought dawned: "Oh. This is it." His calm balances her
+                                    storm, her creativity colors his world. It wasn't just love; it was the universe
+                                    giving a very loud, very clear "duh." They were, in fact, perfect for each other.
                                 </p>
 
                                 <!-- Decorative elements -->
@@ -482,18 +554,24 @@
                                 <div class="corner-decoration top-right"></div>
                                 <div class="corner-decoration bottom-left"></div>
                                 <div class="corner-decoration bottom-right"></div>
-                                
+
                                 <div class="relative overflow-hidden rounded-2xl shadow-2xl story-card group">
-                                    <img src="images/our_story/The wait they are actually perfect for each other.jpg" alt="Perfect for each other" class="w-full h-64 md:h-80 object-cover transition-transform duration-700 group-hover:scale-110"/>
-                                    
-                                    <div class="absolute inset-0 bg-gradient-to-t from-emerald-green/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                                    <img src="images/our_story/The wait they are actually perfect for each other.jpg"
+                                        alt="Perfect for each other"
+                                        class="w-full h-64 md:h-80 object-cover transition-transform duration-700 group-hover:scale-110" />
+
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-emerald-green/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                                         <p class="font-script text-white text-2xl">Perfectly Matched...</p>
                                     </div>
                                 </div>
 
                                 <!-- Floating decorative elements -->
-                                <div class="absolute -top-6 -left-6 text-5xl animate-[float_4s_ease-in-out_infinite] opacity-70">🌹</div>
-                                <div class="absolute -bottom-6 -right-6 text-4xl animate-[float_5s_ease-in-out_infinite] opacity-70" style="animation-delay: 2s;">✨</div>
+                                <div
+                                    class="absolute -top-6 -left-6 text-5xl animate-[float_4s_ease-in-out_infinite] opacity-70">
+                                    🌹</div>
+                                <div class="absolute -bottom-6 -right-6 text-4xl animate-[float_5s_ease-in-out_infinite] opacity-70"
+                                    style="animation-delay: 2s;">✨</div>
                             </div>
                         </div>
                     </div>
@@ -502,7 +580,7 @@
                 <!-- Story Chapter 3: Happily Ever After -->
                 <section class="story-section mb-16">
                     <div class="grid md:grid-cols-2 gap-8 items-center">
-                        
+
                         <!-- Left: Image (Desktop) / Top (Mobile) -->
                         <div class="md:order-1 order-2">
                             <div class="relative ornamental-frame">
@@ -510,55 +588,70 @@
                                 <div class="corner-decoration top-right"></div>
                                 <div class="corner-decoration bottom-left"></div>
                                 <div class="corner-decoration bottom-right"></div>
-                                
+
                                 <div class="relative overflow-hidden rounded-2xl shadow-2xl story-card group">
-                                    <img src="images/our_story/Happily Ever After.jpg" alt="Happily Ever After" class="w-full h-64 md:h-80 object-cover transition-transform duration-700 group-hover:scale-110"/>
-                                    
-                                    <div class="absolute inset-0 bg-gradient-to-t from-gold/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                                    <img src="images/our_story/Happily Ever After.jpg" alt="Happily Ever After"
+                                        class="w-full h-64 md:h-80 object-cover transition-transform duration-700 group-hover:scale-110" />
+
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-gold/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                                         <p class="font-script text-white text-2xl">Forever Begins...</p>
                                     </div>
                                 </div>
 
                                 <!-- Floating decorative elements -->
-                                <div class="absolute -top-6 -right-6 text-5xl animate-[float_4s_ease-in-out_infinite] opacity-70">🦚</div>
-                                <div class="absolute -bottom-6 -left-6 text-4xl animate-[float_5s_ease-in-out_infinite] opacity-70" style="animation-delay: 2s;">🌺</div>
+                                <div
+                                    class="absolute -top-6 -right-6 text-5xl animate-[float_4s_ease-in-out_infinite] opacity-70">
+                                    🦚</div>
+                                <div class="absolute -bottom-6 -left-6 text-4xl animate-[float_5s_ease-in-out_infinite] opacity-70"
+                                    style="animation-delay: 2s;">🌺</div>
                             </div>
                         </div>
 
                         <!-- Right: Content (Desktop) / Bottom (Mobile) -->
                         <div class="md:order-2 order-1 relative">
                             <!-- Timeline dot (desktop only) -->
-                            <div class="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 justify-center">
+                            <div
+                                class="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 justify-center">
                                 <div class="timeline-dot"></div>
                             </div>
 
-                            <div class="bg-white/70 dark:bg-peacock-blue/70 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-xl border-2 border-gold/30 story-card">
+                            <div
+                                class="bg-white/70 dark:bg-peacock-blue/70 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-xl border-2 border-gold/30 story-card">
                                 <div class="flex items-center gap-3 mb-4">
                                     <div class="text-4xl animate-[shimmer_3s_ease-in-out_infinite]">💫</div>
                                     <h3 class="font-heading text-3xl md:text-4xl font-bold text-gold dark:text-gold">
                                         Happily Ever After
                                     </h3>
                                 </div>
-                                
+
                                 <div class="w-24 h-1 bg-gradient-to-r from-gold to-warm-brass mb-6 rounded-full"></div>
-                                
-                                <p class="font-body text-base md:text-lg leading-relaxed text-peacock-blue dark:text-champagne">
-                                    It's been a beautiful journey of love, endless conversations that never seem to end, shared dreams and inside jokes. Now, here we are, ready to start this adventure again, this time forever. Two hearts, one love, countless memories to create.
+
+                                <p
+                                    class="font-body text-base md:text-lg leading-relaxed text-peacock-blue dark:text-champagne">
+                                    It's been a beautiful journey of love, endless conversations that never seem to end,
+                                    shared dreams and inside jokes. Now, here we are, ready to start this adventure
+                                    again, this time forever. Two hearts, one love, countless memories to create.
                                 </p>
 
                                 <!-- Journey stats -->
                                 <div class="mt-8 grid grid-cols-3 gap-4">
-                                    <div class="text-center bg-gradient-to-br from-coral-pink/20 to-salmon-pink/20 rounded-lg p-3">
+                                    <div
+                                        class="text-center bg-gradient-to-br from-coral-pink/20 to-salmon-pink/20 rounded-lg p-3">
                                         <div class="font-heading text-2xl font-bold text-coral-pink">∞</div>
                                         <div class="font-body text-xs text-peacock-blue dark:text-champagne">Love</div>
                                     </div>
-                                    <div class="text-center bg-gradient-to-br from-emerald-green/20 to-sage-green/20 rounded-lg p-3">
+                                    <div
+                                        class="text-center bg-gradient-to-br from-emerald-green/20 to-sage-green/20 rounded-lg p-3">
                                         <div class="font-heading text-2xl font-bold text-emerald-green">2</div>
-                                        <div class="font-body text-xs text-peacock-blue dark:text-champagne">Hearts</div>
+                                        <div class="font-body text-xs text-peacock-blue dark:text-champagne">Hearts
+                                        </div>
                                     </div>
-                                    <div class="text-center bg-gradient-to-br from-gold/20 to-warm-brass/20 rounded-lg p-3">
+                                    <div
+                                        class="text-center bg-gradient-to-br from-gold/20 to-warm-brass/20 rounded-lg p-3">
                                         <div class="font-heading text-2xl font-bold text-gold">1</div>
-                                        <div class="font-body text-xs text-peacock-blue dark:text-champagne">Forever</div>
+                                        <div class="font-body text-xs text-peacock-blue dark:text-champagne">Forever
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -581,24 +674,31 @@
                     <h3 class="font-script text-4xl md:text-5xl text-peacock-blue dark:text-gold mb-6">
                         Join Us in Celebration
                     </h3>
-                    
-                    <p class="font-elegant text-xl text-emerald-green dark:text-sage-green mb-8 max-w-2xl mx-auto italic">
+
+                    <p
+                        class="font-elegant text-xl text-emerald-green dark:text-sage-green mb-8 max-w-2xl mx-auto italic">
                         As we embark on this beautiful journey together, we invite you to be part of our special moments
                     </p>
 
                     <!-- CTA Buttons -->
                     <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                        <button onclick="window.location.href='events.html'" class="group relative w-full sm:w-auto bg-gradient-to-r from-emerald-green to-teal-blue text-white font-heading font-semibold text-lg py-4 px-8 rounded-full shadow-xl hover:shadow-2xl hover:shadow-emerald-green/50 transition-all duration-500 transform hover:scale-105 overflow-hidden">
+                        <button onclick="window.location.href='events.html'"
+                            class="group relative w-full sm:w-auto bg-gradient-to-r from-emerald-green to-teal-blue text-white font-heading font-semibold text-lg py-4 px-8 rounded-full shadow-xl hover:shadow-2xl hover:shadow-emerald-green/50 transition-all duration-500 transform hover:scale-105 overflow-hidden">
                             <span class="relative z-10 flex items-center justify-center gap-2">
-                                <span class="material-symbols-outlined group-hover:animate-[heartBeat_1s_ease-in-out_infinite]">celebration</span>
+                                <span
+                                    class="material-symbols-outlined group-hover:animate-[heartBeat_1s_ease-in-out_infinite]">celebration</span>
                                 <span>View Events</span>
                             </span>
-                            <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000">
+                            </div>
                         </button>
 
-                        <button onclick="window.location.href='rsvp.html'" class="group relative w-full sm:w-auto bg-white dark:bg-peacock-blue border-3 border-gold text-gold hover:bg-gold hover:text-peacock-blue dark:hover:text-cream font-heading font-semibold text-lg py-4 px-8 rounded-full shadow-xl transition-all duration-500 transform hover:scale-105">
+                        <button onclick="window.location.href='rsvp.html'"
+                            class="group relative w-full sm:w-auto bg-white dark:bg-peacock-blue border-3 border-gold text-gold hover:bg-gold hover:text-peacock-blue dark:hover:text-cream font-heading font-semibold text-lg py-4 px-8 rounded-full shadow-xl transition-all duration-500 transform hover:scale-105">
                             <span class="flex items-center justify-center gap-2">
-                                <span class="material-symbols-outlined group-hover:animate-[heartBeat_1s_ease-in-out_infinite]">rsvp</span>
+                                <span
+                                    class="material-symbols-outlined group-hover:animate-[heartBeat_1s_ease-in-out_infinite]">rsvp</span>
                                 <span>RSVP Now</span>
                             </span>
                         </button>
@@ -607,10 +707,14 @@
                     <!-- Bottom flourish -->
                     <div class="mt-12 flex justify-center gap-3">
                         <div class="text-3xl animate-[float_3s_ease-in-out_infinite]">🌿</div>
-                        <div class="text-2xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 0.5s;">💐</div>
-                        <div class="text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1s;">🦚</div>
-                        <div class="text-2xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1.5s;">🌺</div>
-                        <div class="text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 2s;">🌹</div>
+                        <div class="text-2xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 0.5s;">💐
+                        </div>
+                        <div class="text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1s;">🦚
+                        </div>
+                        <div class="text-2xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1.5s;">🌺
+                        </div>
+                        <div class="text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 2s;">🌹
+                        </div>
                     </div>
                 </div>
             </section>
@@ -618,38 +722,65 @@
         </main>
 
         <!-- Bottom Navigation -->
-        <nav class="fixed bottom-0 left-0 right-0 z-50 border-t-2 border-gold/30 bg-champagne/95 dark:bg-peacock-blue/95 backdrop-blur-xl py-3 shadow-2xl">
-            <div class="mx-auto flex max-w-md justify-around items-center px-4">
-                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="index.html">
-                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">home</span>
-                    <span class="text-xs font-medium">Home</span>
+        <nav
+            class="fixed bottom-0 left-0 right-0 z-50 border-t-2 border-gold/30 bg-champagne/95 dark:bg-peacock-blue/95 backdrop-blur-xl py-3 shadow-2xl">
+            <div class="mx-auto flex max-w-lg justify-around items-center px-2">
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="index.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">home</span>
+                    <span class="text-[10px] font-medium">Home</span>
                 </a>
-                
-                <a class="flex flex-col items-center gap-1 text-emerald-green dark:text-gold transform scale-110" href="our-story.html">
+
+                <a class="flex flex-col items-center gap-1 text-emerald-green dark:text-gold transform scale-110"
+                    href="our-story.html">
                     <div class="bg-emerald-green/10 dark:bg-gold/10 p-2 rounded-full">
-                        <span class="material-symbols-outlined text-xl animate-[heartBeat_2s_ease-in-out_infinite]">favorite</span>
+                        <span
+                            class="material-symbols-outlined text-xl animate-[heartBeat_2s_ease-in-out_infinite]">favorite</span>
                     </div>
-                    <span class="text-xs font-bold">Story</span>
+                    <span class="text-[10px] font-bold">Story</span>
                 </a>
-                
-                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="events.html">
-                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">calendar_month</span>
-                    <span class="text-xs font-medium">Events</span>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="events.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">celebration</span>
+                    <span class="text-[10px] font-medium">Events</span>
                 </a>
-                
-                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="venue.html">
-                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">location_on</span>
-                    <span class="text-xs font-medium">Venue</span>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="venue.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">location_on</span>
+                    <span class="text-[10px] font-medium">Venue</span>
                 </a>
-                
-                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="rsvp.html">
-                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">check_box</span>
-                    <span class="text-xs font-medium">RSVP</span>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="rsvp.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">check_box</span>
+                    <span class="text-[10px] font-medium">RSVP</span>
                 </a>
-                
-                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="memories.html">
-                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">photo_library</span>
-                    <span class="text-xs font-medium">Gossip & Memories</span>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="grapevine.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">forum</span>
+                    <span class="text-[10px] font-medium">Grapevine</span>
+                </a>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="memories.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">photo_library</span>
+                    <span class="text-[10px] font-medium">Memories</span>
+                </a>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="find-my-photos.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">face</span>
+                    <span class="text-[10px] font-medium">Find Photos</span>
                 </a>
             </div>
         </nav>
@@ -672,7 +803,7 @@
         }, observerOptions);
 
         // Observe all story sections
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.story-section').forEach(section => {
                 observer.observe(section);
             });
@@ -705,4 +836,5 @@
     </script>
 
 </body>
+
 </html>

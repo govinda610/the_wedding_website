@@ -1,0 +1,39 @@
+# Wedding Website - Combined Requirements
+# Backend + Face Recognition System
+
+# ============================================
+# Web Backend
+# ============================================
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+sqlalchemy>=1.4.49
+python-multipart>=0.0.6
+httpx>=0.25.0
+
+# ============================================
+# Face Recognition - Core ML
+# ============================================
+opencv-python>=4.8.0
+onnxruntime>=1.16.0
+faiss-cpu>=1.7.4
+numpy>=1.24.0
+scipy>=1.10.0
+
+# DeepFace (optional - used by lib/deepface_onnx for model downloads)
+# Note: We use ONNX models directly, but deepface helps with downloads
+deepface>=0.0.79
+tf-keras>=2.15.0
+
+# ============================================
+# Google Drive API (for photo ingestion)
+# ============================================
+google-api-python-client>=2.100.0
+google-auth-httplib2>=0.1.1
+google-auth-oauthlib>=1.1.0
+
+# ============================================
+# Utilities
+# ============================================
+pandas>=2.0.0
+tqdm>=4.66.0
+scipy

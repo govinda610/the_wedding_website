@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Find My Photos - Govind & Samidha's Wedding</title>
+
+    <!-- Fonts (same as wedding website) -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        'coral-pink': '#FF9B8A',
+                        'salmon-pink': '#FFB5A7',
+                        'emerald-green': '#50C878',
+                        'sage-green': '#9CAF88',
+                        'cream': '#FDF6E3',
+                        'champagne': '#F7E7CE',
+                        'teal-blue': '#008B8B',
+                        'peacock-blue': '#005F69',
+                        'terracotta': '#E2725B',
+                        'burnt-orange': '#CC5500',
+                        'gold': '#FFD700',
+                        'warm-brass': '#B5651D',
+                    },
+                    fontFamily: {
+                        'heading': ['Playfair Display', 'serif'],
+                        'elegant': ['Cormorant Garamond', 'serif'],
+                        'body': ['Montserrat', 'sans-serif'],
+                        'script': ['Dancing Script', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            min-height: 100vh;
+        }
+
+        /* Botanical pattern (same as wedding website) */
+        .botanical-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2350C878' fill-opacity='0.08'%3E%3Cpath d='M30 30c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10zm10 0c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Animations (same as wedding website) */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes heartBeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Photo card styles */
+        .photo-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .photo-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(0, 95, 105, 0.25);
+        }
+
+        .photo-card img {
+            transition: transform 0.6s ease;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .photo-card.selected {
+            outline: 4px solid #FFD700;
+            outline-offset: 2px;
+        }
+
+        /* Loading spinner */
+        .loading-spinner {
+            border: 3px solid #F7E7CE;
+            border-top: 3px solid #005F69;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Scroll reveal */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* ========================================
+           MOBILE OPTIMIZATIONS (95% users on mobile)
+           ======================================== */
+
+        /* Larger touch targets for mobile */
+        @media (max-width: 640px) {
+
+            /* === COMPACT LAYOUT === */
+            /* Reduce excessive spacing */
+            main {
+                padding-top: 0.5rem !important;
+                padding-bottom: 5rem !important;
+            }
+
+            main>section {
+                margin-bottom: 1rem !important;
+            }
+
+            /* Tighter header */
+            header>div {
+                padding: 0.5rem 1rem !important;
+            }
+
+            /* Compact section titles */
+            h2 {
+                font-size: 1.5rem !important;
+            }
+
+            /* Smaller subtitle text */
+            .font-elegant {
+                font-size: 0.875rem !important;
+            }
+
+            /* Compact upload box */
+            .rounded-2xl.p-6 {
+                padding: 1rem !important;
+            }
+
+            /* Smaller buttons */
+            button.py-5 {
+                padding-top: 0.75rem !important;
+                padding-bottom: 0.75rem !important;
+            }
+
+            /* Compact photo grid - 3 columns on mobile */
+            #photos-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 0.5rem !important;
+            }
+
+            /* Hide emoji decorations on mobile */
+            .text-4xl.animate-\\[float_3s_ease-in-out_infinite\\],
+            .text-3xl.animate-\\[float_3s_ease-in-out_infinite\\],
+            .text-2xl.animate-\\[float_3s_ease-in-out_infinite\\] {
+                display: none;
+            }
+
+            /* Compact filter bar */
+            .p-4 {
+                padding: 0.5rem !important;
+            }
+
+            /* Full-width action buttons on mobile */
+            .action-btns-mobile {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                width: 100%;
+            }
+
+            /* Disable hover transforms on touch devices */
+            .photo-card:hover {
+                transform: none;
+            }
+
+            /* Larger checkbox for easier tapping */
+            .photo-card .absolute.top-2.right-2>div {
+                width: 2rem !important;
+                height: 2rem !important;
+            }
+
+            /* Compact sticky action bar */
+            .mobile-action-bar {
+                position: sticky;
+                top: 50px;
+                z-index: 40;
+                background: rgba(253, 246, 227, 0.95);
+                backdrop-filter: blur(10px);
+                padding: 0.5rem;
+                margin: 0 -0.5rem 0.5rem;
+                border-radius: 0 0 0.5rem 0.5rem;
+            }
+        }
+
+        /* Touch-friendly lightbox */
+        @media (max-width: 768px) {
+
+            /* Larger nav buttons */
+            #lightbox button {
+                min-width: 48px;
+                min-height: 48px;
+            }
+
+            /* Full-width download button in lightbox */
+            #lightbox-download {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* Swipe hint */
+            .swipe-hint {
+                display: block;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .swipe-hint {
+                display: none;
+            }
+        }
+
+        /* Ensure proper tap highlighting on iOS */
+        button,
+        a,
+        .photo-card {
+            -webkit-tap-highlight-color: rgba(255, 215, 0, 0.2);
+        }
+
+        /* Prevent double-tap zoom on buttons */
+        button {
+            touch-action: manipulation;
+        }
+    </style>
+</head>
+
+<body class="bg-cream dark:bg-peacock-blue font-body text-peacock-blue dark:text-champagne">
+
+    <!-- Background layers (same as wedding website) -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div class="botanical-pattern absolute inset-0"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-champagne/40 via-transparent to-champagne/40"></div>
+    </div>
+
+    <div class="relative flex min-h-screen w-full flex-col">
+
+        <!-- Header (same style as memories.html) -->
+        <header
+            class="sticky top-0 z-50 backdrop-blur-xl bg-cream/90 dark:bg-peacock-blue/90 border-b-2 border-gold/20 shadow-lg">
+            <div class="flex items-center justify-between p-4 max-w-6xl mx-auto">
+                <button onclick="window.location.href='index.html'"
+                    class="group flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-coral-pink to-salmon-pink text-white hover:from-emerald-green hover:to-teal-blue transition-all duration-300 transform hover:scale-110 shadow-lg">
+                    <span class="material-symbols-outlined group-hover:scale-110 transition-transform">arrow_back</span>
+                </button>
+
+                <div class="flex-1 text-center">
+                    <h1 class="font-heading text-2xl md:text-3xl font-bold text-peacock-blue dark:text-champagne">
+                        Find My Photos
+                    </h1>
+                    <div class="flex justify-center items-center gap-2 mt-1">
+                        <div class="w-8 h-0.5 bg-gradient-to-r from-transparent via-gold to-warm-brass"></div>
+                        <div class="text-gold text-xs">❖</div>
+                        <div class="w-8 h-0.5 bg-gradient-to-r from-warm-brass via-gold to-transparent"></div>
+                    </div>
+                </div>
+
+                <div class="w-12 h-12 flex items-center justify-center">
+                    <div class="text-3xl animate-[float_3s_ease-in-out_infinite]">🔍</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="relative flex-grow p-4 md:p-8 pb-24 max-w-6xl mx-auto w-full">
+
+            <!-- Upload Section -->
+            <section class="mb-12 scroll-reveal visible" id="upload-section">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="text-4xl animate-[float_3s_ease-in-out_infinite]">📸</div>
+                    <div>
+                        <h2 class="font-heading text-3xl md:text-4xl font-bold text-peacock-blue dark:text-gold">
+                            Upload Your Photo
+                        </h2>
+                        <p class="font-elegant text-lg text-peacock-blue/70 dark:text-champagne/70 mt-1">
+                            Take a selfie or upload photos to find all your wedding moments
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-white/60 dark:bg-peacock-blue/60 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-xl border-2 border-sage-green/30 max-w-xl mx-auto">
+
+                    <!-- Camera Button -->
+                    <button id="camera-btn"
+                        class="group w-full bg-gradient-to-r from-emerald-green to-teal-blue text-white font-heading font-bold text-lg py-5 px-8 rounded-full shadow-xl hover:shadow-2xl hover:from-coral-pink hover:to-salmon-pink transition-all duration-500 transform hover:scale-105 mb-4">
+                        <span class="flex items-center justify-center gap-3">
+                            <span
+                                class="material-symbols-outlined group-hover:animate-[heartBeat_0.6s_ease-in-out_infinite]">photo_camera</span>
+                            <span>Take a Selfie</span>
+                            <span class="text-2xl group-hover:animate-[heartBeat_0.6s_ease-in-out_infinite]">📷</span>
+                        </span>
+                    </button>
+
+                    <div class="flex items-center gap-4 my-4">
+                        <div class="flex-1 h-0.5 bg-gradient-to-r from-transparent via-gold to-warm-brass"></div>
+                        <span class="font-elegant text-sm text-peacock-blue/60 dark:text-champagne/60">or</span>
+                        <div class="flex-1 h-0.5 bg-gradient-to-r from-warm-brass via-gold to-transparent"></div>
+                    </div>
+
+                    <!-- File Upload (now supports multiple) -->
+                    <input type="file" id="file-input" accept="image/*" multiple class="hidden">
+                    <button onclick="document.getElementById('file-input').click()"
+                        class="w-full border-3 border-dashed border-champagne dark:border-peacock-blue/50 rounded-xl p-8 text-center cursor-pointer bg-white/50 dark:bg-peacock-blue/30 hover:border-emerald-green hover:bg-emerald-green/5 transition-all duration-300">
+                        <div class="text-5xl mb-4 animate-[float_3s_ease-in-out_infinite]">🖼️</div>
+                        <p class="font-heading text-lg text-peacock-blue dark:text-champagne mb-2">
+                            Click to upload photos
+                        </p>
+                        <p class="font-body text-sm text-peacock-blue/60 dark:text-champagne/60">
+                            Upload 1-5 photos for best results • JPG, PNG • Max 10MB each
+                        </p>
+                    </button>
+
+                    <!-- Multi-image Preview Section -->
+                    <div id="multi-preview-section" class="hidden mt-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-elegant text-sm text-peacock-blue dark:text-champagne">
+                                <span id="preview-count">0</span> photos selected
+                            </span>
+                            <button onclick="clearSelectedPhotos()"
+                                class="text-coral-pink hover:text-terracotta text-sm font-body">
+                                Clear all
+                            </button>
+                        </div>
+                        <div id="multi-preview-grid" class="grid grid-cols-5 gap-2">
+                            <!-- Dynamic preview thumbnails will go here -->
+                        </div>
+                        <p class="font-body text-xs text-emerald-green mt-2 text-center hidden" id="multi-photo-tip">
+                            ✨ Tip: Multiple photos from different angles improve accuracy!
+                        </p>
+                    </div>
+
+                    <!-- Search Button (appears after photo selection) -->
+                    <button id="search-btn"
+                        class="hidden w-full mt-4 bg-gradient-to-r from-gold to-warm-brass text-white font-heading font-bold text-lg py-4 px-8 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105">
+                        <span class="flex items-center justify-center gap-3">
+                            <span class="material-symbols-outlined">search</span>
+                            <span>Find My Photos</span>
+                        </span>
+                    </button>
+
+                    <!-- Threshold Slider -->
+                    <div class="mt-6 pt-6 border-t-2 border-gold/20">
+                        <label class="block font-elegant text-sm text-peacock-blue dark:text-champagne mb-3">
+                            <span class="material-symbols-outlined text-base align-middle mr-2">tune</span>
+                            Match Sensitivity
+                        </label>
+                        <input type="range" id="threshold" min="0.3" max="0.7" step="0.05" value="0.50"
+                            class="w-full h-2 bg-champagne dark:bg-peacock-blue/50 rounded-lg appearance-none cursor-pointer accent-emerald-green">
+                        <div
+                            class="flex justify-between font-body text-xs text-peacock-blue/60 dark:text-champagne/60 mt-2">
+                            <span>More results</span>
+                            <span>Higher accuracy</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Camera View (hidden by default) -->
+            <section id="camera-view" class="hidden mb-12">
+                <div
+                    class="bg-white/60 dark:bg-peacock-blue/60 backdrop-blur-md rounded-2xl p-6 shadow-xl border-2 border-sage-green/30 max-w-xl mx-auto">
+                    <video id="camera-preview" class="w-full rounded-xl mb-4 border-2 border-gold/20" autoplay
+                        playsinline></video>
+                    <div class="flex gap-4">
+                        <button id="capture-btn"
+                            class="flex-1 bg-gradient-to-r from-emerald-green to-teal-blue text-white font-heading font-bold py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                            <span class="flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined">camera</span>
+                                Capture
+                            </span>
+                        </button>
+                        <button id="cancel-camera-btn"
+                            class="flex-1 bg-champagne dark:bg-peacock-blue/50 text-peacock-blue dark:text-champagne font-heading font-semibold py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loading Section -->
+            <section id="loading-section" class="hidden text-center py-8">
+                <!-- Preview photo container -->
+                <div class="max-w-xs mx-auto mb-6">
+                    <div class="relative rounded-2xl overflow-hidden shadow-xl border-2 border-gold/30">
+                        <img id="preview-photo" src="" alt="Your photo" class="w-full aspect-square object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-peacock-blue/50 to-transparent"></div>
+                        <div class="absolute bottom-3 left-3 right-3">
+                            <p class="text-white font-heading text-sm drop-shadow-lg">Searching for you...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress indicator -->
+                <div class="max-w-md mx-auto mb-6">
+                    <div class="flex items-center justify-between mb-3">
+                        <!-- Step 1: Upload -->
+                        <div class="flex flex-col items-center" id="progress-step-1">
+                            <div class="w-10 h-10 rounded-full bg-emerald-green flex items-center justify-center mb-1">
+                                <span class="material-symbols-outlined text-white">check</span>
+                            </div>
+                            <span class="text-xs font-medium text-emerald-green">Uploaded</span>
+                        </div>
+                        <div class="flex-1 h-1 bg-emerald-green mx-2"></div>
+                        <!-- Step 2: Detecting -->
+                        <div class="flex flex-col items-center" id="progress-step-2">
+                            <div
+                                class="w-10 h-10 rounded-full bg-gold/50 flex items-center justify-center mb-1 animate-pulse">
+                                <span class="material-symbols-outlined text-white">face</span>
+                            </div>
+                            <span class="text-xs font-medium text-gold">Detecting</span>
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-300 dark:bg-gray-600 mx-2" id="progress-bar-2"></div>
+                        <!-- Step 3: Searching -->
+                        <div class="flex flex-col items-center" id="progress-step-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center mb-1">
+                                <span class="material-symbols-outlined text-white">search</span>
+                            </div>
+                            <span class="text-xs font-medium text-gray-400">Searching</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loading message -->
+                <p class="font-heading text-2xl text-peacock-blue dark:text-gold mb-2" id="loading-message">
+                    Analyzing your photo...</p>
+                <p class="font-elegant text-lg text-peacock-blue/60 dark:text-champagne/60" id="loading-detail">
+                    Looking for matching faces
+                </p>
+
+                <!-- Animated emojis -->
+                <div class="flex justify-center gap-4 mt-6">
+                    <div class="text-3xl animate-[float_3s_ease-in-out_infinite]">🦚</div>
+                    <div class="text-2xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 0.5s;">📸
+                    </div>
+                    <div class="text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1s;">💐</div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results-section" class="hidden">
+                <!-- Sticky Action Bar - stays visible while scrolling -->
+                <div id="sticky-action-bar"
+                    class="sticky top-[60px] md:top-[80px] z-40 -mx-4 md:-mx-8 px-4 md:px-8 py-2 bg-cream dark:bg-peacock-blue border-b border-gold/30 shadow-md">
+                    <div class="flex flex-wrap items-center justify-between gap-3 max-w-6xl mx-auto">
+                        <!-- Left: Photo count and selection -->
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">🎉</span>
+                            <div>
+                                <span class="font-heading text-lg font-bold text-peacock-blue dark:text-champagne">
+                                    <span id="result-count" class="text-emerald-green">0</span> Photos
+                                </span>
+                                <span class="text-peacock-blue/60 dark:text-champagne/60 text-sm ml-2">
+                                    (<span id="selected-count-display" class="text-coral-pink font-semibold">0</span>
+                                    selected)
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Right: Action buttons -->
+                        <div class="flex flex-wrap gap-2">
+                            <button id="select-all-btn"
+                                class="flex items-center gap-1 bg-champagne dark:bg-peacock-blue/50 text-peacock-blue dark:text-champagne font-body font-semibold text-xs md:text-sm px-3 md:px-4 py-2 rounded-full shadow hover:shadow-lg transition-all duration-300 hover:scale-105">
+                                <span class="material-symbols-outlined text-lg">check_box</span>
+                                <span class="hidden sm:inline">Select All</span>
+                            </button>
+                            <button id="download-selected-btn"
+                                class="flex items-center gap-1 bg-gradient-to-r from-coral-pink to-salmon-pink text-white font-body font-semibold text-xs md:text-sm px-3 md:px-4 py-2 rounded-full shadow hover:shadow-lg hover:from-emerald-green hover:to-teal-blue transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                                disabled>
+                                <span class="material-symbols-outlined text-lg">download</span>
+                                <span>Download (<span id="selected-count">0</span>)</span>
+                            </button>
+                            <button id="share-to-memories-btn"
+                                class="flex items-center gap-1 bg-gradient-to-r from-gold to-warm-brass text-white font-body font-semibold text-xs md:text-sm px-3 md:px-4 py-2 rounded-full shadow hover:shadow-lg hover:from-emerald-green hover:to-teal-blue transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                                disabled>
+                                <span class="material-symbols-outlined text-lg">share</span>
+                                <span class="hidden sm:inline">Share to Memories</span>
+                                <span class="sm:hidden">Share</span>
+                            </button>
+                            <button id="new-search-btn"
+                                class="flex items-center gap-1 bg-gradient-to-r from-emerald-green to-teal-blue text-white font-body font-semibold text-xs md:text-sm px-3 md:px-4 py-2 rounded-full shadow hover:shadow-lg transition-all duration-300 hover:scale-105">
+                                <span class="material-symbols-outlined text-lg">search</span>
+                                <span class="hidden sm:inline">New Search</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Query Preview + Filters combined (compact mobile-first) -->
+                    <div class="py-1 md:py-1.5 lg:py-2 border-t border-gold/10">
+                        <div class="flex flex-wrap items-center gap-1.5 md:gap-3 lg:gap-4 xl:gap-5 max-w-6xl mx-auto">
+                            <!-- Left group: Query preview, dropdowns, emojis -->
+                            <div class="flex flex-wrap items-center gap-1.5 md:gap-3 lg:gap-4">
+                                <!-- Query Preview -->
+                                <div id="query-preview-bar" class="hidden items-center gap-1">
+                                    <span
+                                        class="font-elegant text-[10px] text-peacock-blue/70 dark:text-champagne/70">You:</span>
+                                    <div id="query-preview-images" class="flex gap-0.5"></div>
+                                    <span class="text-gold/40 mx-1">|</span>
+                                </div>
+
+                                <!-- Event + Date dropdowns (compact) -->
+                                <select id="filter-event" onchange="applyFilters()"
+                                    class="bg-champagne dark:bg-peacock-blue/50 text-peacock-blue dark:text-champagne font-body text-xs md:text-sm px-2 pr-6 md:px-3 md:pr-7 py-1 md:py-1.5 rounded-full border border-gold/30 focus:ring-1 focus:ring-gold">
+                                    <option value="">All Events</option>
+                                    <option value="01,02">🌿 Mehendi</option>
+                                    <option value="Sangeet">💍 Sangeet</option>
+                                    <option value="Groom Mayra">🎨 Mayra</option>
+                                    <option value="lunch">🍽️ Lunch</option>
+                                    <option value="haldi">🎪 Haldi</option>
+                                    <option value="Bride Rituals & Chak">👰 Rituals</option>
+                                    <option value="wedding">👑 Wedding</option>
+                                    <option value="cam p">🕉️ Phera</option>
+                                </select>
+                                <select id="filter-date" onchange="applyFilters()"
+                                    class="bg-champagne dark:bg-peacock-blue/50 text-peacock-blue dark:text-champagne font-body text-xs md:text-sm px-2 pr-6 md:px-3 md:pr-7 py-1 md:py-1.5 rounded-full border border-gold/30 focus:ring-1 focus:ring-gold">
+                                    <option value="">All Dates</option>
+                                    <option value="2025-11-20">Nov 20</option>
+                                    <option value="2025-11-21">Nov 21</option>
+                                    <option value="2025-11-22">Nov 22</option>
+                                    <option value="2025-11-23">Nov 23</option>
+                                </select>
+
+                                <!-- Emotion filters (responsive sizing) -->
+                                <div class="flex items-center gap-0.5 md:gap-1">
+                                    <button onclick="toggleEmotionFilter('happy')" data-emotion="happy"
+                                        class="emotion-btn text-base md:text-lg lg:text-xl p-0.5 md:p-1 rounded-full hover:bg-gold/20"
+                                        title="Happy">😊</button>
+                                    <button onclick="toggleEmotionFilter('sad')" data-emotion="sad"
+                                        class="emotion-btn text-base md:text-lg lg:text-xl p-0.5 md:p-1 rounded-full hover:bg-gold/20"
+                                        title="Sad">😢</button>
+                                    <button onclick="toggleEmotionFilter('angry')" data-emotion="angry"
+                                        class="emotion-btn text-base md:text-lg lg:text-xl p-0.5 md:p-1 rounded-full hover:bg-gold/20"
+                                        title="Angry">😠</button>
+                                    <button onclick="toggleEmotionFilter('surprise')" data-emotion="surprise"
+                                        class="emotion-btn text-base md:text-lg lg:text-xl p-0.5 md:p-1 rounded-full hover:bg-gold/20"
+                                        title="Surprised">😮</button>
+                                    <button onclick="toggleEmotionFilter('neutral')" data-emotion="neutral"
+                                        class="emotion-btn text-base md:text-lg lg:text-xl p-0.5 md:p-1 rounded-full hover:bg-gold/20"
+                                        title="Neutral">😐</button>
+                                </div>
+
+                                <!-- Bride/Groom (responsive) -->
+                                <button onclick="togglePersonFilter('groom')" id="filter-groom"
+                                    class="person-btn flex items-center gap-0.5 md:gap-1 bg-champagne dark:bg-peacock-blue/50 text-peacock-blue dark:text-champagne font-body text-xs md:text-sm px-2 md:px-3 py-1 md:py-1.5 rounded-full border border-gold/30 hover:bg-gold/20">
+                                    <span>🤵</span><span class="hidden sm:inline">Groom</span>
+                                </button>
+                                <button onclick="togglePersonFilter('bride')" id="filter-bride"
+                                    class="person-btn flex items-center gap-0.5 md:gap-1 bg-champagne dark:bg-peacock-blue/50 text-peacock-blue dark:text-champagne font-body text-xs md:text-sm px-2 md:px-3 py-1 md:py-1.5 rounded-full border border-gold/30 hover:bg-gold/20">
+                                    <span>👰</span><span class="hidden sm:inline">Bride</span>
+                                </button>
+
+                                <!-- Clear filters (X icon on mobile, text on sm+) -->
+                                <button onclick="clearAllFilters()"
+                                    class="text-coral-pink hover:text-terracotta text-sm font-body whitespace-nowrap flex items-center"
+                                    title="Clear filters">
+                                    <span class="material-symbols-outlined text-base sm:hidden">close</span>
+                                    <span class="hidden sm:inline text-xs md:text-sm">Clear</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Active Filters Display -->
+                        <div id="active-filters" class="hidden mt-3 pt-3 border-t border-gold/20">
+                            <span class="font-elegant text-sm text-peacock-blue/70 dark:text-champagne/70">
+                                Showing <span id="filtered-count">0</span> of <span id="total-count">0</span> photos
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photos Grid (outside sticky, scrolls normally) -->
+                <div id="photos-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
+                    <!-- Photos will be inserted here -->
+                </div>
+
+                <!-- Showing count and See More -->
+                <div class="mt-6 text-center">
+                    <p id="showing-count" class="font-elegant text-peacock-blue/70 dark:text-champagne/70 mb-4">
+                    </p>
+                    <button id="see-more-btn"
+                        class="hidden group bg-gradient-to-r from-champagne to-cream dark:from-peacock-blue/50 dark:to-teal-blue/30 text-peacock-blue dark:text-champagne font-heading font-bold text-lg py-4 px-10 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border-2 border-gold/30">
+                        <span class="flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined group-hover:animate-bounce">expand_more</span>
+                            <span>See More</span>
+                        </span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- No Results Section -->
+            <section id="no-results-section" class="hidden text-center py-16">
+                <div class="text-6xl mb-6">😢</div>
+                <h2 class="font-heading text-3xl text-peacock-blue dark:text-gold mb-4">No Photos Found</h2>
+                <p class="font-elegant text-xl text-peacock-blue/70 dark:text-champagne/70 mb-8 max-w-md mx-auto">
+                    We couldn't find any matching photos. Try adjusting the sensitivity or use a clearer photo.
+                </p>
+                <button id="try-again-btn"
+                    class="group bg-gradient-to-r from-emerald-green to-teal-blue text-white font-heading font-bold text-lg py-4 px-10 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105">
+                    <span class="flex items-center justify-center gap-2">
+                        <span
+                            class="material-symbols-outlined group-hover:animate-[heartBeat_0.6s_ease-in-out_infinite]">refresh</span>
+                        <span>Try Again</span>
+                    </span>
+                </button>
+            </section>
+
+            <!-- Error Section -->
+            <section id="error-section" class="hidden text-center py-16">
+                <div class="text-6xl mb-6">⚠️</div>
+                <h2 class="font-heading text-3xl text-peacock-blue dark:text-gold mb-4">Something Went Wrong</h2>
+                <p class="font-elegant text-xl text-peacock-blue/70 dark:text-champagne/70 mb-8" id="error-message">
+                    Please try again later.</p>
+                <button id="error-retry-btn"
+                    class="group bg-gradient-to-r from-coral-pink to-salmon-pink text-white font-heading font-bold text-lg py-4 px-10 rounded-full shadow-xl hover:shadow-2xl hover:from-emerald-green hover:to-teal-blue transition-all duration-500 transform hover:scale-105">
+                    <span class="flex items-center justify-center gap-2">
+                        <span
+                            class="material-symbols-outlined group-hover:animate-[heartBeat_0.6s_ease-in-out_infinite]">refresh</span>
+                        <span>Try Again</span>
+                    </span>
+                </button>
+            </section>
+
+            <!-- Bottom decorative flourish -->
+            <div class="mt-12 flex justify-center gap-4 scroll-reveal visible">
+                <div class="text-3xl animate-[float_3s_ease-in-out_infinite]">🌿</div>
+                <div class="text-2xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 0.5s;">🔍</div>
+                <div class="text-4xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1s;">🦚</div>
+                <div class="text-2xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 1.5s;">📸</div>
+                <div class="text-3xl animate-[float_3s_ease-in-out_infinite]" style="animation-delay: 2s;">🌺</div>
+            </div>
+
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav
+            class="fixed bottom-0 left-0 right-0 z-50 border-t-2 border-gold/30 bg-champagne/95 dark:bg-peacock-blue/95 backdrop-blur-xl py-3 shadow-2xl">
+            <div class="mx-auto flex max-w-lg justify-around items-center px-2">
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="index.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">home</span>
+                    <span class="text-[10px] font-medium">Home</span>
+                </a>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="our-story.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">favorite</span>
+                    <span class="text-[10px] font-medium">Story</span>
+                </a>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="events.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">celebration</span>
+                    <span class="text-[10px] font-medium">Events</span>
+                </a>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="venue.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">location_on</span>
+                    <span class="text-[10px] font-medium">Venue</span>
+                </a>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="rsvp.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">check_box</span>
+                    <span class="text-[10px] font-medium">RSVP</span>
+                </a>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="grapevine.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">forum</span>
+                    <span class="text-[10px] font-medium">Grapevine</span>
+                </a>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="memories.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">photo_library</span>
+                    <span class="text-[10px] font-medium">Memories</span>
+                </a>
+
+                <a class="flex flex-col items-center gap-1 text-emerald-green dark:text-gold transform scale-110"
+                    href="find-my-photos.html">
+                    <div class="bg-emerald-green/10 dark:bg-gold/10 p-2 rounded-full">
+                        <span
+                            class="material-symbols-outlined text-xl animate-[heartBeat_2s_ease-in-out_infinite]">face</span>
+                    </div>
+                    <span class="text-[10px] font-bold">Find Photos</span>
+                </a>
+            </div>
+        </nav>
+
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="hidden fixed inset-0 z-[100] bg-black/95 flex items-center justify-center">
+        <!-- Close button -->
+        <button id="lightbox-close"
+            class="absolute top-4 right-4 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all z-10">
+            <span class="material-symbols-outlined text-white text-3xl">close</span>
+        </button>
+
+        <!-- Photo counter -->
+        <div id="lightbox-counter"
+            class="absolute top-4 left-4 font-heading text-white/80 text-lg bg-black/30 px-4 py-2 rounded-full">
+            1 / 10
+        </div>
+
+        <!-- Previous button -->
+        <button id="lightbox-prev"
+            class="absolute left-4 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all">
+            <span class="material-symbols-outlined text-white text-3xl">chevron_left</span>
+        </button>
+
+        <!-- Image container -->
+        <div class="max-w-[90vw] max-h-[80vh] flex items-center justify-center">
+            <img id="lightbox-image" src="" alt="Full size wedding photo"
+                class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl transition-opacity duration-300">
+        </div>
+
+        <!-- Next button -->
+        <button id="lightbox-next"
+            class="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all">
+            <span class="material-symbols-outlined text-white text-3xl">chevron_right</span>
+        </button>
+
+        <!-- Bottom bar with info and download -->
+        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+            <div class="flex items-center justify-between max-w-3xl mx-auto">
+                <!-- Photo info -->
+                <div id="lightbox-info" class="text-white font-elegant text-lg">
+                    <span class="mr-4">😊 happy</span>
+                    <span>95% match</span>
+                </div>
+
+                <!-- Download button -->
+                <button id="lightbox-download"
+                    class="flex items-center gap-2 bg-gradient-to-r from-coral-pink to-salmon-pink hover:from-emerald-green hover:to-teal-blue text-white font-body font-semibold px-6 py-3 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+                    <span class="material-symbols-outlined">download</span>
+                    <span>Download</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Keyboard hint -->
+        <div class="absolute bottom-20 left-1/2 -translate-x-1/2 text-white/50 font-body text-sm hidden md:block">
+            Use ← → arrow keys to navigate • ESC to close
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/face-search.js"></script>
+
+    <script>
+        // Scroll reveal initialization
+        document.addEventListener('DOMContentLoaded', function () {
+            const reveals = document.querySelectorAll('.scroll-reveal');
+            reveals.forEach(el => el.classList.add('visible'));
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,13 +1,23 @@
+import sys
+from pathlib import Path
+
+# Add parent directory to path for face_recognition module
+_parent_dir = Path(__file__).parent.parent
+if str(_parent_dir) not in sys.path:
+    sys.path.insert(0, str(_parent_dir))
+
 from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from sqlalchemy.orm import Session
 from typing import List, Optional
 import shutil
 import os
 import uuid
 import json
+import zipfile
+import io
 from datetime import datetime
 
 # Import our modules
@@ -17,6 +27,9 @@ from models import (
     GrapevineRequest, GrapevineResponse,
     TestimonialRequest, CombinedMemoryRequest, GalleryResponse
 )
+
+# Import face recognition router
+from face_recognition.api import router as face_router
 
 # Initialize FastAPI app
 app = FastAPI(title="Wedding Website API", version="1.0.0")
@@ -48,15 +61,64 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 # Mount static files for the frontend - serve from parent directory
 app.mount("/static", StaticFiles(directory=os.path.join(os.path.dirname(__file__), "..")), name="static")
 
+# Mount thumbnails directory for face search
+_thumbnails_dir = os.path.join(os.path.dirname(__file__), "..", "data", "thumbnails")
+if os.path.exists(_thumbnails_dir):
+    app.mount("/thumbnails", StaticFiles(directory=_thumbnails_dir), name="thumbnails")
+
+# Mount full-size wedding photos directory (replaces Google Drive dependency)
+_photos_dir = os.path.join(os.path.dirname(__file__), "..", "data", "images")
+if os.path.exists(_photos_dir):
+    app.mount("/photos", StaticFiles(directory=_photos_dir), name="photos")
+    print(f"✓ Full photos directory mounted: {_photos_dir}")
+
+# Include face recognition router
+app.include_router(face_router)
+
 # Initialize database on startup
 @app.on_event("startup")
 async def startup_event():
     init_db()
+    # Preload face recognition models in background
+    try:
+        from face_recognition import get_processor
+        get_processor()  # This loads all models into memory
+        print("✓ Face recognition models loaded")
+    except Exception as e:
+        print(f"⚠ Face recognition models not loaded: {e}")
 
 # Health check endpoint
 @app.get("/health")
 async def health_check():
     return {"status": "healthy", "timestamp": datetime.now()}
+
+# Frontend page routes
+_frontend_dir = os.path.join(os.path.dirname(__file__), "..")
+
+@app.get("/find-my-photos")
+async def serve_find_my_photos():
+    """Serve the face search page"""
+    return FileResponse(os.path.join(_frontend_dir, "find-my-photos.html"))
+
+@app.get("/find-my-photos.html")
+async def serve_find_my_photos_html():
+    """Serve the face search page (with .html extension)"""
+    return FileResponse(os.path.join(_frontend_dir, "find-my-photos.html"))
+
+@app.get("/grapevine")
+async def serve_grapevine():
+    """Serve the grapevine page"""
+    return FileResponse(os.path.join(_frontend_dir, "grapevine.html"))
+
+@app.get("/grapevine.html")
+async def serve_grapevine_html():
+    """Serve the grapevine page (with .html extension)"""
+    return FileResponse(os.path.join(_frontend_dir, "grapevine.html"))
+
+@app.get("/face-search.js")
+async def serve_face_search_js():
+    """Serve the face search JavaScript file"""
+    return FileResponse(os.path.join(_frontend_dir, "static", "js", "face-search.js"), media_type="application/javascript")
 
 # RSVP Endpoints
 @app.post("/api/rsvp", response_model=RSVPResponse)
@@ -281,6 +343,111 @@ async def get_gallery_items(db: Session = Depends(get_db)):
         author_name=item.author_name,
         created_at=item.created_at
     ) for item in items]
+
+@app.post("/api/gallery/share-wedding-photos")
+async def share_wedding_photos(
+    image_ids: List[str] = Form(...),
+    message: Optional[str] = Form(None),
+    author_name: Optional[str] = Form("Anonymous"),
+    db: Session = Depends(get_db)
+):
+    """
+    Share wedding photos from Find My Photos to Memories page.
+    
+    Unlike /api/gallery/combined which handles file uploads,
+    this endpoint accepts image IDs of existing wedding photos.
+    """
+    import json
+    
+    if not image_ids:
+        raise HTTPException(status_code=400, detail="Please select at least one photo to share")
+    
+    # Verify at least one image exists
+    photos_dir = os.path.join(os.path.dirname(__file__), "..", "data", "images")
+    valid_ids = []
+    for img_id in image_ids:
+        img_path = os.path.join(photos_dir, f"{img_id}.jpg")
+        if os.path.exists(img_path):
+            valid_ids.append(img_id)
+    
+    if not valid_ids:
+        raise HTTPException(status_code=404, detail="No valid photos found")
+    
+    # Create gallery entries for each photo
+    created_items = []
+    for img_id in valid_ids:
+        content_data = {
+            "wedding_photo_id": img_id,  # Reference to existing photo
+            "thumbnail": f"/thumbnails/{img_id}.jpg",
+            "full_image": f"/photos/{img_id}.jpg"
+        }
+        
+        # Add message only to first photo
+        if message and img_id == valid_ids[0]:
+            content_data["message"] = message.strip()
+        
+        db_gallery = GalleryModel(
+            type="wedding_photo",  # New type for shared wedding photos
+            content=json.dumps(content_data),
+            author_name=author_name or "Anonymous"
+        )
+        db.add(db_gallery)
+        created_items.append(db_gallery)
+    
+    db.commit()
+    
+    return {
+        "status": "success",
+        "message": f"Shared {len(valid_ids)} photo(s) to Memories!",
+        "shared_count": len(valid_ids)
+    }
+
+@app.post("/api/download-zip")
+async def download_photos_zip(image_ids: List[str] = Form(...)):
+    """
+    Create and download a ZIP file containing selected photos.
+    Used when user selects >10 photos for download.
+    """
+    if not image_ids:
+        raise HTTPException(status_code=400, detail="No image IDs provided")
+    
+    # Limit to prevent abuse
+    if len(image_ids) > 500:
+        raise HTTPException(status_code=400, detail="Maximum 500 photos per download")
+    
+    # Create in-memory ZIP file
+    zip_buffer = io.BytesIO()
+    photos_dir = os.path.join(os.path.dirname(__file__), "..", "data", "images")
+    
+    found_count = 0
+    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+        for image_id in image_ids:
+            # Try common image extensions
+            for ext in ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG']:
+                file_path = os.path.join(photos_dir, f"{image_id}.{ext}")
+                if os.path.exists(file_path):
+                    # Add to ZIP with a clean filename
+                    arcname = f"wedding_photos/{image_id}.{ext.lower()}"
+                    zip_file.write(file_path, arcname)
+                    found_count += 1
+                    break
+    
+    if found_count == 0:
+        raise HTTPException(status_code=404, detail="No photos found")
+    
+    # Seek to beginning of buffer
+    zip_buffer.seek(0)
+    
+    # Generate filename with count
+    filename = f"wedding_photos_{found_count}_images.zip"
+    
+    return StreamingResponse(
+        zip_buffer,
+        media_type="application/zip",
+        headers={
+            "Content-Disposition": f"attachment; filename={filename}"
+        }
+    )
 
 @app.get("/api/uploads/{filename}")
 async def get_uploaded_file(filename: str):

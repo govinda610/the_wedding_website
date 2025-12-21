@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Gossip & Memories - Govind & Samidha's Wedding</title>
-    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memories - Govind & Samidha's Wedding</title>
+
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect"/>
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-    
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    
+
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -43,7 +46,7 @@
             }
         }
     </script>
-    
+
     <style>
         body {
             min-height: 100vh;
@@ -60,6 +63,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -71,6 +75,7 @@
                 opacity: 0;
                 transform: translateX(-40px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -82,6 +87,7 @@
                 opacity: 0;
                 transform: scale(0.9);
             }
+
             to {
                 opacity: 1;
                 transform: scale(1);
@@ -89,18 +95,39 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
         }
 
         @keyframes heartBeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
         }
 
         @keyframes shimmer {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
+
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 1;
+            }
         }
 
         @keyframes modalSlideIn {
@@ -108,6 +135,7 @@
                 opacity: 0;
                 transform: translateY(50px) scale(0.9);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0) scale(1);
@@ -129,21 +157,26 @@
         .gallery-item {
             position: relative;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: box-shadow 0.4s ease, transform 0.4s ease;
+            /* GPU compositing to prevent flicker */
+            will-change: transform, box-shadow;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+            transform: translateZ(0);
         }
 
         .gallery-item:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 20px 40px rgba(0, 95, 105, 0.25);
+            transform: translateZ(0) translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 95, 105, 0.2);
         }
 
         .gallery-item img {
-            transition: transform 0.6s ease;
+            /* Prevent image from causing reflow */
+            backface-visibility: hidden;
+            transform: translateZ(0);
         }
 
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
+        /* Removed image scale on hover - causes masonry flicker */
 
         /* Drag and drop zone */
         .dropzone {
@@ -180,11 +213,26 @@
                 transition-duration: 0.01ms !important;
             }
         }
+
+        /* Fix gallery image flickering */
+        .gallery-item img {
+            opacity: 0;
+            transition: opacity 0.3s ease-in;
+        }
+
+        .gallery-item img.loaded {
+            opacity: 1;
+        }
+
+        /* Prevent layout shift with minimum height */
+        .gallery-item {
+            min-height: 100px;
+        }
     </style>
 </head>
 
 <body class="bg-cream dark:bg-peacock-blue font-body text-peacock-blue dark:text-champagne">
-    
+
     <!-- Background layers -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden">
         <div class="botanical-pattern absolute inset-0"></div>
@@ -192,17 +240,19 @@
     </div>
 
     <div class="relative flex min-h-screen w-full flex-col">
-        
+
         <!-- Header -->
-        <header class="sticky top-0 z-50 backdrop-blur-xl bg-cream/90 dark:bg-peacock-blue/90 border-b-2 border-gold/20 shadow-lg">
+        <header
+            class="sticky top-0 z-50 backdrop-blur-xl bg-cream/90 dark:bg-peacock-blue/90 border-b-2 border-gold/20 shadow-lg">
             <div class="flex items-center justify-between p-4 max-w-6xl mx-auto">
-                <button onclick="window.location.href='index.html'" class="group flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-coral-pink to-salmon-pink text-white hover:from-emerald-green hover:to-teal-blue transition-all duration-300 transform hover:scale-110 shadow-lg">
+                <button onclick="window.location.href='index.html'"
+                    class="group flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-coral-pink to-salmon-pink text-white hover:from-emerald-green hover:to-teal-blue transition-all duration-300 transform hover:scale-110 shadow-lg">
                     <span class="material-symbols-outlined group-hover:scale-110 transition-transform">arrow_back</span>
                 </button>
-                
+
                 <div class="flex-1 text-center">
                     <h1 class="font-heading text-2xl md:text-3xl font-bold text-peacock-blue dark:text-champagne">
-                        Gossip & Memories
+                        Memories
                     </h1>
                     <div class="flex justify-center items-center gap-2 mt-1">
                         <div class="w-8 h-0.5 bg-gradient-to-r from-transparent via-gold to-warm-brass"></div>
@@ -210,85 +260,15 @@
                         <div class="w-8 h-0.5 bg-gradient-to-r from-warm-brass via-gold to-transparent"></div>
                     </div>
                 </div>
-                
+
                 <div class="w-12 h-12 flex items-center justify-center">
-                    <div class="text-3xl animate-[float_3s_ease-in-out_infinite]">📸</div>
+                    <div class="text-3xl animate-[float_3s_ease-in-out_infinite]">📷</div>
                 </div>
             </div>
         </header>
 
         <!-- Main Content -->
         <main class="relative flex-grow p-4 md:p-8 pb-24 max-w-6xl mx-auto w-full">
-            
-            <!-- Grapevine Section -->
-            <section class="mb-12 scroll-reveal">
-                <div class="flex items-center justify-between mb-6">
-                    <div class="flex items-center gap-3">
-                        <div class="text-4xl animate-[float_3s_ease-in-out_infinite]">🍇</div>
-                        <h2 class="font-heading text-3xl md:text-4xl font-bold text-peacock-blue dark:text-gold">
-                            The Grapevine
-                        </h2>
-                    </div>
-                </div>
-
-                <div class="bg-white/60 dark:bg-peacock-blue/60 backdrop-blur-md rounded-2xl p-6 shadow-xl border-2 border-sage-green/30">
-                    
-                    <!-- Messages Container -->
-                    <div class="space-y-4 mb-6 max-h-96 overflow-y-auto" id="messages-container">
-                        
-                        <!-- Sample Message 1 -->
-                        <div class="message-card flex items-start gap-4 bg-champagne/40 dark:bg-peacock-blue/40 rounded-xl p-4">
-                            <img alt="User avatar" class="h-12 w-12 rounded-full border-2 border-gold shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUcvoKwFyBELqVUW4fgZR-p-l54VFa91RoQL9TCcSfxK3gaNlmD8hn0WcZaE3vxZ9SA8pnwWMZfTlyt5PGfny6Ap2mFOnhx8e4XiGTmkkj4njgstZ93C33rTF_zNQ4D3vlVMpSk8Glmm-t7GCzkE0V3teboRcpYCPFiG_6pjocKTwdv5Xu91iS8kpFRwxUqX95YEgiEgVwqYF_YMXTZLbEPTe_w76a5lP9VROt1BxlR1cVtePYLRGdbfwXdXCE_iBTX-Ag1NEH"/>
-                            <div class="flex-1">
-                                <div class="bg-white/80 dark:bg-peacock-blue/80 rounded-xl p-4 shadow-md">
-                                    <p class="font-body text-sm md:text-base text-peacock-blue dark:text-champagne">
-                                        I heard that the girl was a Brahmin and that it's a love marriage.
-                                    </p>
-                                </div>
-                                <div class="flex items-center gap-2 mt-2">
-                                    <span class="font-elegant text-xs font-semibold text-emerald-green dark:text-sage-green">Aunty #1</span>
-                                    <span class="text-peacock-blue/40 dark:text-champagne/40">•</span>
-                                    <span class="font-body text-xs text-peacock-blue/60 dark:text-champagne/60">2 hours ago</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Sample Message 2 -->
-                        <div class="message-card flex items-start gap-4 bg-champagne/40 dark:bg-peacock-blue/40 rounded-xl p-4">
-                            <img alt="User avatar" class="h-12 w-12 rounded-full border-2 border-gold shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEiZZ1wKOZALSe2p-m5PEzwOxSpqhoptXzc6Jfm_uCXZ94Iq3g2tIOp1C7eSj8hB-KGxudDyJ5aJucV76Z9_yWOrE0E3Z6dQ9CbdOrBx5djV_Z3nLNCZforouppHM7gqIv-rHqspj8VMNreO6Bo2HGYGUCVTwIVQipzpx1mS88PcYtqzEacTfBjtZWm9-bMmpBx8m40nlC0XLr1oyh5mUy_iwc50pAUEOLI5iLZcMBz4JZ54z3Kc2D-banYFvO4Mt-18QVSK-r"/>
-                            <div class="flex-1">
-                                <div class="bg-white/80 dark:bg-peacock-blue/80 rounded-xl p-4 shadow-md">
-                                    <p class="font-body text-sm md:text-base text-peacock-blue dark:text-champagne">
-                                        Yeah, yeah, that's true. They have been at it since college. They've had an affair since college.
-                                    </p>
-                                </div>
-                                <div class="flex items-center gap-2 mt-2">
-                                    <span class="font-elegant text-xs font-semibold text-emerald-green dark:text-sage-green">Aunty #2</span>
-                                    <span class="text-peacock-blue/40 dark:text-champagne/40">•</span>
-                                    <span class="font-body text-xs text-peacock-blue/60 dark:text-champagne/60">1 hour ago</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Input for new message -->
-                    <div class="flex items-center gap-3 mt-6 pt-6 border-t-2 border-gold/20">
-                        <input 
-                            type="text" 
-                            id="grapevine-input"
-                            placeholder="Spill the tea... ☕" 
-                            class="flex-1 border-2 border-champagne dark:border-peacock-blue/50 rounded-full px-6 py-3 font-body text-sm md:text-base bg-white/80 dark:bg-peacock-blue/30 text-peacock-blue dark:text-champagne placeholder:text-peacock-blue/40 dark:placeholder:text-champagne/40 focus:border-emerald-green focus:ring-0 transition-all duration-300"
-                        />
-                        <button 
-                            onclick="submitGrapevineMessage()"
-                            class="group flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-emerald-green to-teal-blue text-white hover:from-gold hover:to-warm-brass shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110"
-                        >
-                            <span class="material-symbols-outlined group-hover:animate-[heartBeat_0.5s_ease-in-out]">send</span>
-                        </button>
-                    </div>
-                </div>
-            </section>
 
             <!-- Gallery Section -->
             <section class="scroll-reveal">
@@ -299,12 +279,11 @@
                             Memories
                         </h2>
                     </div>
-                    
-                    <button 
-                        onclick="openAddMemoryModal()"
-                        class="group flex items-center gap-2 bg-gradient-to-r from-coral-pink to-salmon-pink text-white font-body font-semibold text-sm md:text-base px-5 py-3 rounded-full shadow-lg hover:shadow-xl hover:from-emerald-green hover:to-teal-blue transition-all duration-300 transform hover:scale-105"
-                    >
-                        <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.6s_ease-in-out_infinite]">add_a_photo</span>
+
+                    <button onclick="openAddMemoryModal()"
+                        class="group flex items-center gap-2 bg-gradient-to-r from-coral-pink to-salmon-pink text-white font-body font-semibold text-sm md:text-base px-5 py-3 rounded-full shadow-lg hover:shadow-xl hover:from-emerald-green hover:to-teal-blue transition-all duration-300 transform hover:scale-105">
+                        <span
+                            class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.6s_ease-in-out_infinite]">add_a_photo</span>
                         <span class="hidden sm:inline">Add Yours</span>
                     </button>
                 </div>
@@ -327,38 +306,65 @@
         </main>
 
         <!-- Bottom Navigation -->
-        <nav class="fixed bottom-0 left-0 right-0 z-50 border-t-2 border-gold/30 bg-champagne/95 dark:bg-peacock-blue/95 backdrop-blur-xl py-3 shadow-2xl">
-            <div class="mx-auto flex max-w-md justify-around items-center px-4">
-                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="index.html">
-                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">home</span>
-                    <span class="text-xs font-medium">Home</span>
+        <nav
+            class="fixed bottom-0 left-0 right-0 z-50 border-t-2 border-gold/30 bg-champagne/95 dark:bg-peacock-blue/95 backdrop-blur-xl py-3 shadow-2xl">
+            <div class="mx-auto flex max-w-lg justify-around items-center px-2">
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="index.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">home</span>
+                    <span class="text-[10px] font-medium">Home</span>
                 </a>
-                
-                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="our-story.html">
-                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">favorite</span>
-                    <span class="text-xs font-medium">Story</span>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="our-story.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">favorite</span>
+                    <span class="text-[10px] font-medium">Story</span>
                 </a>
-                
-                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="events.html">
-                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">celebration</span>
-                    <span class="text-xs font-medium">Events</span>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="events.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">celebration</span>
+                    <span class="text-[10px] font-medium">Events</span>
                 </a>
-                
-                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="venue.html">
-                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">location_on</span>
-                    <span class="text-xs font-medium">Venue</span>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="venue.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">location_on</span>
+                    <span class="text-[10px] font-medium">Venue</span>
                 </a>
-                
-                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group" href="rsvp.html">
-                    <span class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">check_box</span>
-                    <span class="text-xs font-medium">RSVP</span>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="rsvp.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">check_box</span>
+                    <span class="text-[10px] font-medium">RSVP</span>
                 </a>
-                
-                <a class="flex flex-col items-center gap-1 text-emerald-green dark:text-gold transform scale-110" href="memories.html">
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="grapevine.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">forum</span>
+                    <span class="text-[10px] font-medium">Grapevine</span>
+                </a>
+
+                <a class="flex flex-col items-center gap-1 text-emerald-green dark:text-gold transform scale-110"
+                    href="memories.html">
                     <div class="bg-emerald-green/10 dark:bg-gold/10 p-2 rounded-full">
-                        <span class="material-symbols-outlined text-xl animate-[heartBeat_2s_ease-in-out_infinite]">photo_library</span>
+                        <span
+                            class="material-symbols-outlined text-xl animate-[heartBeat_2s_ease-in-out_infinite]">photo_library</span>
                     </div>
-                    <span class="text-xs font-bold">Gossip & Memories</span>
+                    <span class="text-[10px] font-bold">Memories</span>
+                </a>
+
+                <a class="flex flex-col items-center gap-1 text-peacock-blue/60 dark:text-champagne/60 hover:text-emerald-green dark:hover:text-gold transition-all duration-300 transform hover:scale-110 group"
+                    href="find-my-photos.html">
+                    <span
+                        class="material-symbols-outlined text-xl group-hover:animate-[heartBeat_0.5s_ease-in-out]">face</span>
+                    <span class="text-[10px] font-medium">Find Photos</span>
                 </a>
             </div>
         </nav>
@@ -366,42 +372,42 @@
     </div>
 
     <!-- Add Memory Modal -->
-    <div id="addMemoryModal" class="fixed inset-0 bg-peacock-blue/50 dark:bg-black/60 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
-        <div class="modal-content bg-cream dark:bg-peacock-blue border-4 border-gold/40 rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto shadow-2xl">
-            
+    <div id="addMemoryModal"
+        class="fixed inset-0 bg-peacock-blue/50 dark:bg-black/60 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
+        <div
+            class="modal-content bg-cream dark:bg-peacock-blue border-4 border-gold/40 rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto shadow-2xl">
+
             <!-- Modal Header -->
-            <div class="sticky top-0 bg-cream/95 dark:bg-peacock-blue/95 backdrop-blur-xl border-b-2 border-gold/20 p-6 flex items-center justify-between">
+            <div
+                class="sticky top-0 bg-cream/95 dark:bg-peacock-blue/95 backdrop-blur-xl border-b-2 border-gold/20 p-6 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="text-4xl animate-[float_3s_ease-in-out_infinite]">🎊</div>
                     <h3 class="font-heading text-2xl md:text-3xl font-bold text-peacock-blue dark:text-gold">
                         Add Your Memory
                     </h3>
                 </div>
-                <button 
-                    onclick="closeAddMemoryModal()"
-                    class="group flex h-10 w-10 items-center justify-center rounded-full bg-coral-pink/20 dark:bg-salmon-pink/20 text-coral-pink dark:text-salmon-pink hover:bg-coral-pink hover:text-white transition-all duration-300"
-                >
-                    <span class="material-symbols-outlined group-hover:rotate-90 transition-transform duration-300">close</span>
+                <button onclick="closeAddMemoryModal()"
+                    class="group flex h-10 w-10 items-center justify-center rounded-full bg-coral-pink/20 dark:bg-salmon-pink/20 text-coral-pink dark:text-salmon-pink hover:bg-coral-pink hover:text-white transition-all duration-300">
+                    <span
+                        class="material-symbols-outlined group-hover:rotate-90 transition-transform duration-300">close</span>
                 </button>
             </div>
 
             <!-- Modal Content -->
             <div class="p-6 space-y-6">
-                
+
                 <!-- Photo Upload Section -->
                 <div>
                     <label class="block font-elegant text-lg text-peacock-blue dark:text-champagne mb-3">
                         <span class="material-symbols-outlined text-xl align-middle mr-2">add_photo_alternate</span>
                         Upload Photo (Optional)
                     </label>
-                    
+
                     <input type="file" id="photoInput" accept="image/*" class="hidden">
-                    
-                    <div 
-                        id="dropzone"
+
+                    <div id="dropzone"
                         class="dropzone border-3 border-dashed border-champagne dark:border-peacock-blue/50 rounded-xl p-8 text-center cursor-pointer bg-white/50 dark:bg-peacock-blue/30 hover:border-emerald-green hover:bg-emerald-green/5 transition-all duration-300"
-                        onclick="document.getElementById('photoInput').click()"
-                    >
+                        onclick="document.getElementById('photoInput').click()">
                         <div class="text-6xl mb-4 animate-[float_3s_ease-in-out_infinite]">📸</div>
                         <p class="font-heading text-lg text-peacock-blue dark:text-champagne mb-2">
                             Click or drag photo here
@@ -414,11 +420,9 @@
                     <!-- Photo Preview -->
                     <div id="photoPreview" class="mt-4 hidden">
                         <div class="relative rounded-xl overflow-hidden border-2 border-gold/30">
-                            <img id="previewImage" class="w-full h-48 object-cover"/>
-                            <button 
-                                onclick="removePhoto()"
-                                class="absolute top-2 right-2 bg-coral-pink text-white p-2 rounded-full hover:bg-terracotta transition-all duration-300 shadow-lg"
-                            >
+                            <img id="previewImage" class="w-full h-48 object-cover" />
+                            <button onclick="removePhoto()"
+                                class="absolute top-2 right-2 bg-coral-pink text-white p-2 rounded-full hover:bg-terracotta transition-all duration-300 shadow-lg">
                                 <span class="material-symbols-outlined text-sm">close</span>
                             </button>
                         </div>
@@ -427,45 +431,39 @@
 
                 <!-- Message Input -->
                 <div>
-                    <label class="block font-elegant text-lg text-peacock-blue dark:text-champagne mb-3" for="messageInput">
+                    <label class="block font-elegant text-lg text-peacock-blue dark:text-champagne mb-3"
+                        for="messageInput">
                         <span class="material-symbols-outlined text-xl align-middle mr-2">chat_bubble</span>
                         Your Message (Optional)
                     </label>
-                    <textarea 
-                        id="messageInput" 
-                        rows="4"
+                    <textarea id="messageInput" rows="4"
                         placeholder="Share your wishes, memories, or thoughts about the couple..."
-                        class="w-full border-2 border-champagne dark:border-peacock-blue/50 rounded-xl px-5 py-4 font-body text-base bg-white/80 dark:bg-peacock-blue/30 text-peacock-blue dark:text-champagne placeholder:text-peacock-blue/40 dark:placeholder:text-champagne/40 focus:border-emerald-green focus:ring-0 resize-none transition-all duration-300"
-                    ></textarea>
+                        class="w-full border-2 border-champagne dark:border-peacock-blue/50 rounded-xl px-5 py-4 font-body text-base bg-white/80 dark:bg-peacock-blue/30 text-peacock-blue dark:text-champagne placeholder:text-peacock-blue/40 dark:placeholder:text-champagne/40 focus:border-emerald-green focus:ring-0 resize-none transition-all duration-300"></textarea>
                 </div>
 
                 <!-- Author Name -->
                 <div>
-                    <label class="block font-elegant text-lg text-peacock-blue dark:text-champagne mb-3" for="authorInput">
+                    <label class="block font-elegant text-lg text-peacock-blue dark:text-champagne mb-3"
+                        for="authorInput">
                         <span class="material-symbols-outlined text-xl align-middle mr-2">person</span>
                         Your Name (Optional)
                     </label>
-                    <input 
-                        type="text" 
-                        id="authorInput" 
-                        placeholder="Leave blank to post anonymously"
-                        class="w-full border-2 border-champagne dark:border-peacock-blue/50 rounded-xl px-5 py-4 font-body text-base bg-white/80 dark:bg-peacock-blue/30 text-peacock-blue dark:text-champagne placeholder:text-peacock-blue/40 dark:placeholder:text-champagne/40 focus:border-emerald-green focus:ring-0 transition-all duration-300"
-                    />
+                    <input type="text" id="authorInput" placeholder="Leave blank to post anonymously"
+                        class="w-full border-2 border-champagne dark:border-peacock-blue/50 rounded-xl px-5 py-4 font-body text-base bg-white/80 dark:bg-peacock-blue/30 text-peacock-blue dark:text-champagne placeholder:text-peacock-blue/40 dark:placeholder:text-champagne/40 focus:border-emerald-green focus:ring-0 transition-all duration-300" />
                 </div>
 
                 <!-- Submit Button -->
                 <div class="pt-4">
-                    <button 
-                        onclick="submitMemory()"
-                        class="group w-full bg-gradient-to-r from-emerald-green to-teal-blue text-white font-heading font-bold text-lg py-5 px-8 rounded-full shadow-xl hover:shadow-2xl hover:from-coral-pink hover:to-salmon-pink transition-all duration-500 transform hover:scale-105"
-                    >
+                    <button onclick="submitMemory()"
+                        class="group w-full bg-gradient-to-r from-emerald-green to-teal-blue text-white font-heading font-bold text-lg py-5 px-8 rounded-full shadow-xl hover:shadow-2xl hover:from-coral-pink hover:to-salmon-pink transition-all duration-500 transform hover:scale-105">
                         <span class="flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined group-hover:animate-[heartBeat_0.6s_ease-in-out_infinite]">send</span>
+                            <span
+                                class="material-symbols-outlined group-hover:animate-[heartBeat_0.6s_ease-in-out_infinite]">send</span>
                             <span>Submit Memory</span>
                             <span class="text-2xl group-hover:animate-[heartBeat_0.6s_ease-in-out_infinite]">💕</span>
                         </span>
                     </button>
-                    
+
                     <p class="mt-4 text-center font-elegant text-sm text-peacock-blue/60 dark:text-champagne/60 italic">
                         You can add a photo, message, or both!
                     </p>
@@ -488,7 +486,7 @@
         ];
 
         // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             loadGrapevineMessages();
             loadGalleryItems();
             setupDragAndDrop();
@@ -514,7 +512,7 @@
         }
 
         // Photo handling
-        document.getElementById('photoInput')?.addEventListener('change', function(e) {
+        document.getElementById('photoInput')?.addEventListener('change', function (e) {
             const file = e.target.files[0];
             if (file) {
                 if (file.size > 5 * 1024 * 1024) {
@@ -522,10 +520,10 @@
                     this.value = '';
                     return;
                 }
-                
+
                 selectedFile = file;
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     document.getElementById('previewImage').src = e.target.result;
                     document.getElementById('photoPreview').classList.remove('hidden');
                 };
@@ -542,7 +540,7 @@
         // Drag and drop functionality
         function setupDragAndDrop() {
             const dropzone = document.getElementById('dropzone');
-            
+
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                 dropzone.addEventListener(eventName, preventDefaults, false);
             });
@@ -564,7 +562,7 @@
                 }, false);
             });
 
-            dropzone.addEventListener('drop', function(e) {
+            dropzone.addEventListener('drop', function (e) {
                 const files = e.dataTransfer.files;
                 if (files.length > 0) {
                     const file = files[0];
@@ -586,30 +584,30 @@
         async function submitMemory() {
             const message = document.getElementById('messageInput').value.trim();
             const authorName = document.getElementById('authorInput').value.trim() || 'Velle uncle/auntie';
-            
+
             if (!selectedFile && !message) {
                 alert('Please add a photo, message, or both to share your memory.');
                 return;
             }
-            
+
             try {
                 const formData = new FormData();
-                
+
                 if (selectedFile) {
                     formData.append('photo', selectedFile);
                 }
-                
+
                 if (message) {
                     formData.append('message', message);
                 }
-                
+
                 formData.append('author_name', authorName);
-                
+
                 const response = await fetch(`${API_BASE_URL}/api/gallery/combined`, {
                     method: 'POST',
                     body: formData
                 });
-                
+
                 if (response.ok) {
                     let successMessage = 'Memory submitted successfully!';
                     if (selectedFile && message) {
@@ -619,7 +617,7 @@
                     } else if (message) {
                         successMessage = 'Message submitted successfully! 💬';
                     }
-                    
+
                     alert(successMessage);
                     closeAddMemoryModal();
                     loadGalleryItems();
@@ -649,13 +647,13 @@
         function displayGrapevineMessages() {
             const container = document.getElementById('messages-container');
             if (!container) return;
-            
+
             // Keep first two hardcoded messages, remove dynamic ones
             const existingMessages = container.querySelectorAll('.message-card');
             for (let i = 2; i < existingMessages.length; i++) {
                 existingMessages[i].remove();
             }
-            
+
             // Add new messages from backend
             currentMessages.forEach(message => {
                 const messageElement = createMessageElement(message);
@@ -667,11 +665,11 @@
         function createMessageElement(message) {
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message-card flex items-start gap-4 bg-champagne/40 dark:bg-peacock-blue/40 rounded-xl p-4';
-            
+
             const timeAgo = getTimeAgo(new Date(message.created_at));
             const avatarIndex = message.id ? (message.id % avatarUrls.length) : Math.floor(Math.random() * avatarUrls.length);
             const avatarUrl = avatarUrls[avatarIndex];
-            
+
             messageDiv.innerHTML = `
                 <img alt="User avatar" class="h-12 w-12 rounded-full border-2 border-gold shadow-lg" src="${avatarUrl}"/>
                 <div class="flex-1">
@@ -685,7 +683,7 @@
                     </div>
                 </div>
             `;
-            
+
             return messageDiv;
         }
 
@@ -693,9 +691,9 @@
         async function submitGrapevineMessage() {
             const input = document.getElementById('grapevine-input');
             const message = input.value.trim();
-            
+
             if (!message) return;
-            
+
             try {
                 const response = await fetch(`${API_BASE_URL}/api/grapevine`, {
                     method: 'POST',
@@ -707,7 +705,7 @@
                         author_name: 'Velle uncle/auntie'
                     })
                 });
-                
+
                 if (response.ok) {
                     input.value = '';
                     loadGrapevineMessages();
@@ -721,7 +719,7 @@
         }
 
         // Enter key for grapevine
-        document.getElementById('grapevine-input')?.addEventListener('keypress', function(e) {
+        document.getElementById('grapevine-input')?.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 submitGrapevineMessage();
             }
@@ -744,11 +742,11 @@
         function displayGalleryItems() {
             const container = document.getElementById('gallery-container');
             if (!container) return;
-            
+
             // Remove dynamic items
             const dynamicItems = container.querySelectorAll('[data-dynamic="true"]');
             dynamicItems.forEach(item => item.remove());
-            
+
             // Add new items
             currentGalleryItems.forEach(item => {
                 const itemElement = createGalleryItemElement(item);
@@ -761,7 +759,7 @@
         function createGalleryItemElement(item) {
             const itemDiv = document.createElement('div');
             itemDiv.className = 'break-inside-avoid mb-4';
-            
+
             if (item.type === 'photo') {
                 itemDiv.innerHTML = `
                     <div class="gallery-item bg-white/70 dark:bg-peacock-blue/70 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border-2 border-gold/20">
@@ -787,13 +785,13 @@
                 try {
                     const contentData = JSON.parse(item.content);
                     let html = '<div class="gallery-item bg-white/70 dark:bg-peacock-blue/70 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border-2 border-gold/20">';
-                    
+
                     if (contentData.photo) {
                         html += `
                             <img alt="User uploaded photo" class="w-full object-cover" src="/api/uploads/${contentData.photo}"/>
                         `;
                     }
-                    
+
                     if (contentData.message) {
                         html += `
                             <div class="p-5">
@@ -803,7 +801,7 @@
                             </div>
                         `;
                     }
-                    
+
                     html += `
                         <div class="px-5 pb-5">
                             <p class="font-body text-xs font-semibold text-emerald-green dark:text-sage-green text-center">
@@ -812,13 +810,53 @@
                         </div>
                     `;
                     html += '</div>';
-                    
+
                     itemDiv.innerHTML = html;
                 } catch (e) {
                     console.error('Error parsing combined content:', e);
                 }
+            } else if (item.type === 'wedding_photo') {
+                // Shared wedding photo from Find My Photos
+                try {
+                    const contentData = JSON.parse(item.content);
+                    let html = '<div class="gallery-item bg-white/70 dark:bg-peacock-blue/70 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border-2 border-gold/20">';
+
+                    // Use full_image for display
+                    if (contentData.full_image) {
+                        html += `
+                            <img alt="Wedding photo shared by ${escapeHtml(item.author_name)}" 
+                                 class="w-full object-cover cursor-pointer" 
+                                 src="${contentData.thumbnail}"
+                                 onclick="window.open('${contentData.full_image}', '_blank')"/>
+                        `;
+                    }
+
+                    // Show message if present
+                    if (contentData.message) {
+                        html += `
+                            <div class="p-5">
+                                <p class="font-elegant text-sm md:text-base text-peacock-blue dark:text-champagne italic mb-3 leading-relaxed">
+                                    "${escapeHtml(contentData.message)}"
+                                </p>
+                            </div>
+                        `;
+                    }
+
+                    html += `
+                        <div class="px-5 pb-5">
+                            <p class="font-body text-xs font-semibold text-emerald-green dark:text-sage-green text-center">
+                                Shared by ${escapeHtml(item.author_name)} 💕
+                            </p>
+                        </div>
+                    `;
+                    html += '</div>';
+
+                    itemDiv.innerHTML = html;
+                } catch (e) {
+                    console.error('Error parsing wedding_photo content:', e);
+                }
             }
-            
+
             return itemDiv;
         }
 
@@ -860,7 +898,7 @@
             const diffMs = now - date;
             const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
             const diffMinutes = Math.floor(diffMs / (1000 * 60));
-            
+
             if (diffHours > 0) {
                 return `${diffHours} hour${diffHours === 1 ? '' : 's'} ago`;
             } else if (diffMinutes > 0) {
@@ -871,14 +909,14 @@
         }
 
         // Close modal on outside click
-        document.getElementById('addMemoryModal')?.addEventListener('click', function(e) {
+        document.getElementById('addMemoryModal')?.addEventListener('click', function (e) {
             if (e.target === this) {
                 closeAddMemoryModal();
             }
         });
 
         // Close modal on Escape key
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 const modal = document.getElementById('addMemoryModal');
                 if (modal && !modal.classList.contains('hidden')) {
@@ -887,9 +925,24 @@
             }
         });
 
+        // Fix image flickering - add loaded class when image loads
+        document.addEventListener('load', function (e) {
+            if (e.target.tagName === 'IMG' && e.target.closest('.gallery-item')) {
+                e.target.classList.add('loaded');
+            }
+        }, true); // Use capture phase
+
+        // Mark already-loaded images
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            if (img.complete) {
+                img.classList.add('loaded');
+            }
+        });
+
         console.log('📸 Enhanced Memories Page Loaded');
         console.log('✨ Photo gallery and grapevine active');
     </script>
 
 </body>
+
 </html>
