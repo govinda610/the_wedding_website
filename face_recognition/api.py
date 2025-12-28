@@ -38,6 +38,7 @@ from pydantic import BaseModel
 class LRUCache(OrderedDict):
     """
     Least Recently Used cache with a maximum size.
+    Thread-safe implementation for concurrent access.
     
     When cache exceeds max_size, oldest (least recently accessed) entries
     are automatically removed. This prevents unbounded memory growth.
@@ -54,18 +55,31 @@ class LRUCache(OrderedDict):
     def __setitem__(self, key, value):
         with self.lock:
             # Move to end if exists (mark as recently used)
-            if super().__contains__(key):
-                self.move_to_end(key)
+            try:
+                if super().__contains__(key):
+                    self.move_to_end(key)
+            except KeyError:
+                pass  # Key was evicted by another thread, continue with set
             super().__setitem__(key, value)
             # Remove oldest if over capacity
             while len(self) > self.max_size:
-                self.popitem(last=False)
+                try:
+                    self.popitem(last=False)
+                except KeyError:
+                    break  # Cache is empty or race condition, stop evicting
     
     def __getitem__(self, key):
         with self.lock:
-            if super().__contains__(key):
-                self.move_to_end(key)  # Mark as recently used
-            return super().__getitem__(key)
+            try:
+                value = super().__getitem__(key)
+                # Only move_to_end if we successfully got the value
+                try:
+                    self.move_to_end(key)
+                except KeyError:
+                    pass  # Key was evicted between get and move, that's OK
+                return value
+            except KeyError:
+                raise  # Re-raise KeyError for callers to handle
     
     def __contains__(self, key):
         with self.lock:
@@ -73,10 +87,15 @@ class LRUCache(OrderedDict):
     
     def get(self, key, default=None):
         with self.lock:
-            if super().__contains__(key):
-                self.move_to_end(key)
-                return super().__getitem__(key)
-            return default
+            try:
+                value = super().__getitem__(key)
+                try:
+                    self.move_to_end(key)
+                except KeyError:
+                    pass  # Key was evicted, that's OK
+                return value
+            except KeyError:
+                return default
 
 
 # Task results storage with LRU eviction (max 100 concurrent tasks)
