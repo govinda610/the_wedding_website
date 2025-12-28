@@ -181,26 +181,68 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Touch swipe navigation for lightbox (mobile)
+    // Improved: higher threshold, multi-touch detection, debouncing
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchEndX = 0;
+    let touchEndY = 0;
+    let isSwiping = false;
+    let isMultiTouch = false;
+    let lastSwipeTime = 0;
 
     document.addEventListener('touchstart', (e) => {
         if (currentLightboxIndex === -1) return;
+
+        // Detect multi-touch (pinch-to-zoom)
+        isMultiTouch = e.touches.length > 1;
+        if (isMultiTouch) return;
+
         touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+        isSwiping = true;
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (e) => {
+        // If user adds another finger during move, it's a pinch
+        if (e.touches.length > 1) {
+            isMultiTouch = true;
+            isSwiping = false;
+        }
     }, { passive: true });
 
     document.addEventListener('touchend', (e) => {
         if (currentLightboxIndex === -1) return;
+        if (!isSwiping || isMultiTouch) {
+            // Reset for next gesture
+            isMultiTouch = false;
+            isSwiping = false;
+            return;
+        }
+
         touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
         handleSwipe();
+        isSwiping = false;
     }, { passive: true });
 
     function handleSwipe() {
-        const swipeThreshold = 50; // Minimum swipe distance
-        const diff = touchStartX - touchEndX;
+        const swipeThreshold = 80; // Increased from 50 to reduce sensitivity
+        const verticalThreshold = 100; // Ignore if vertical movement is too large
+        const debounceMs = 300; // Prevent rapid consecutive swipes
 
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
+        const diffX = touchStartX - touchEndX;
+        const diffY = Math.abs(touchStartY - touchEndY);
+        const now = Date.now();
+
+        // Debounce: ignore if swiped too recently
+        if (now - lastSwipeTime < debounceMs) return;
+
+        // Ignore if vertical movement is significant (user is scrolling or zooming)
+        if (diffY > verticalThreshold) return;
+
+        if (Math.abs(diffX) > swipeThreshold) {
+            lastSwipeTime = now;
+            if (diffX > 0) {
                 // Swiped left → next photo
                 navigateLightbox(1);
             } else {
