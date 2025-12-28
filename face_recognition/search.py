@@ -35,6 +35,7 @@ USAGE:
 import json
 import faiss
 import numpy as np
+import threading
 from pathlib import Path
 from typing import List, Dict, Optional, Tuple
 from .config import Config
@@ -340,12 +341,17 @@ class FaceIndex:
         return self.index.ntotal
 
 
-# Singleton instance for reuse
+# Singleton instance for reuse (thread-safe)
 _index_instance = None
+_index_lock = threading.Lock()
+
 
 def get_index() -> FaceIndex:
-    """Get or create the singleton face index instance."""
+    """Get or create the singleton face index instance (thread-safe)."""
     global _index_instance
     if _index_instance is None:
-        _index_instance = FaceIndex()
+        with _index_lock:
+            # Double-check locking pattern
+            if _index_instance is None:
+                _index_instance = FaceIndex()
     return _index_instance

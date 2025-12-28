@@ -22,6 +22,7 @@ USAGE:
 
 import os
 import numpy as np
+import threading
 from pathlib import Path
 from typing import List, Dict, Set, Optional, Tuple
 from .config import Config, DATA_DIR
@@ -29,15 +30,19 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# Singleton instance
+# Singleton instance with thread-safe initialization
 _matcher_instance = None
+_matcher_lock = threading.Lock()
 
 
 def get_bride_groom_matcher():
-    """Get singleton instance of BrideGroomMatcher."""
+    """Get singleton instance of BrideGroomMatcher (thread-safe)."""
     global _matcher_instance
     if _matcher_instance is None:
-        _matcher_instance = BrideGroomMatcher()
+        with _matcher_lock:
+            # Double-check locking pattern
+            if _matcher_instance is None:
+                _matcher_instance = BrideGroomMatcher()
     return _matcher_instance
 
 
@@ -70,6 +75,7 @@ class BrideGroomMatcher:
         self.bride_embedding: Optional[np.ndarray] = None
         self.groom_embedding: Optional[np.ndarray] = None
         self._loaded = False
+        self._load_lock = threading.Lock()  # Protect lazy loading
         
         # Pre-computed sets of image_ids containing bride/groom
         self._bride_image_ids: Optional[Set[str]] = None
@@ -83,18 +89,23 @@ class BrideGroomMatcher:
         logger.debug(f"BrideGroomMatcher initialized for {model_name}")
     
     def _ensure_loaded(self):
-        """Load embeddings if not already loaded."""
+        """Load embeddings if not already loaded (thread-safe)."""
         if self._loaded:
             return
         
-        # Try to load from cache first
-        if self.cache_file.exists():
-            self._load_from_cache()
-        else:
-            # Compute from reference images
-            self._compute_embeddings()
-        
-        self._loaded = True
+        with self._load_lock:
+            # Double-check after acquiring lock
+            if self._loaded:
+                return
+            
+            # Try to load from cache first
+            if self.cache_file.exists():
+                self._load_from_cache()
+            else:
+                # Compute from reference images
+                self._compute_embeddings()
+            
+            self._loaded = True
     
     def _load_from_cache(self):
         """Load pre-computed embeddings from cache file."""

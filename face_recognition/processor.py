@@ -20,6 +20,7 @@ USAGE:
 """
 
 import numpy as np
+import threading
 from typing import List, Dict, Tuple, Optional
 from .config import Config
 from .detector import FaceDetector, get_detector
@@ -415,12 +416,17 @@ class FaceProcessor:
         }
 
 
-# Singleton instance
+# Singleton instance (thread-safe)
 _processor_instance = None
+_processor_lock = threading.Lock()
+
 
 def get_processor() -> FaceProcessor:
-    """Get or create the singleton face processor instance."""
+    """Get or create the singleton face processor instance (thread-safe)."""
     global _processor_instance
     if _processor_instance is None:
-        _processor_instance = FaceProcessor()
+        with _processor_lock:
+            # Double-check locking pattern
+            if _processor_instance is None:
+                _processor_instance = FaceProcessor()
     return _processor_instance
