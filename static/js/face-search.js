@@ -708,9 +708,6 @@ function showResults(data) {
     selectedPhotos.clear();
     displayedCount = 0;
 
-    // Clear any active filters for new search
-    clearAllFilters();
-
     if (elements.resultCount) {
         elements.resultCount.textContent = data.total_matches;
     }
@@ -719,10 +716,16 @@ function showResults(data) {
     }
 
     // Clear grid and show initial batch
+    // NOTE: We do this BEFORE clearAllFilters() to avoid double-render bug
+    // clearAllFilters() would re-render starting from displayedCount (which would be 15 after first render)
     if (elements.photosGrid) {
         elements.photosGrid.innerHTML = '';
     }
     showMorePhotos();
+
+    // Now clear any active filter UI state (but don't re-render)
+    clearAllFiltersUI();
+
     updateDownloadButton();
     updateShowingCount();
 
@@ -731,6 +734,12 @@ function showResults(data) {
 
     if (elements.resultsSection) {
         elements.resultsSection.classList.remove('hidden');
+
+        // Scroll to top of page first, then let sticky bar position naturally
+        // This ensures first images (1, 2, 3...) are visible, not images 15+
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100);
     }
 }
 
@@ -752,6 +761,8 @@ function showError(message) {
 }
 
 function hideAllSections() {
+    // Hide upload section too - this was missing and caused first 15 images to be off-screen!
+    if (elements.uploadSection) elements.uploadSection.classList.add('hidden');
     if (elements.loadingSection) elements.loadingSection.classList.add('hidden');
     if (elements.resultsSection) elements.resultsSection.classList.add('hidden');
     if (elements.noResultsSection) elements.noResultsSection.classList.add('hidden');
@@ -1456,9 +1467,35 @@ function applyFilters() {
 }
 
 /**
- * Clear all filters
+ * Clear all filters (both UI and data, then re-render)
+ * Used when user clicks "Clear" button
  */
 function clearAllFilters() {
+    // Reset UI state first
+    clearAllFiltersUI();
+
+    // Restore all photos
+    allPhotos = [...unfilteredPhotos];
+    displayedCount = 0;
+
+    // Redisplay
+    if (elements.photosGrid) {
+        elements.photosGrid.innerHTML = '';
+    }
+    showMorePhotos();
+
+    // Update counts
+    updateShowingCount();
+    if (elements.resultCount) {
+        elements.resultCount.textContent = unfilteredPhotos.length;
+    }
+}
+
+/**
+ * Clear filter UI state only (no re-render)
+ * Used during initial results display to avoid double-render bug
+ */
+function clearAllFiltersUI() {
     // Reset state
     activeFilters = {
         event: '',
@@ -1484,24 +1521,9 @@ function clearAllFilters() {
         btn.classList.remove('bg-gold/40', 'ring-2', 'ring-gold');
     });
 
-    // Restore all photos
-    allPhotos = [...unfilteredPhotos];
-    displayedCount = 0;
-
-    // Redisplay
-    if (elements.photosGrid) {
-        elements.photosGrid.innerHTML = '';
-    }
-    showMorePhotos();
-
     // Hide active filters bar
     const activeFiltersEl = document.getElementById('active-filters');
     if (activeFiltersEl) activeFiltersEl.classList.add('hidden');
-
-    // Update header count
-    if (elements.resultCount) {
-        elements.resultCount.textContent = unfilteredPhotos.length;
-    }
 }
 
 // =============================================================================
